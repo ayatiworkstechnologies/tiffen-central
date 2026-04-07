@@ -37,16 +37,13 @@ export default function HeroZoomPoster() {
     <section ref={heroRef} className="relative h-[300vh] w-full bg-black">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Layer 1: Background Video */}
-        <motion.div
-          style={{ scale: videoScale, filter: `blur(${videoBlur})` }}
-          className="absolute inset-0 z-0"
-        >
+        <motion.div className="absolute inset-0 z-0">
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="h-full w-full object-cover brightness-50"
+            className="h-full w-full object-cover"
           >
             <source src="/hero-video.mp4" type="video/mp4" />
           </video>
@@ -76,12 +73,12 @@ export default function HeroZoomPoster() {
             style={{ opacity: titleOpacity, scale: titleScale }}
             className="text-center"
           >
-            <p className="mb-6 text-xs uppercase tracking-[0.4em] text-blue-400">
+            <p className="mb-6 text-xs uppercase tracking-[0.4em] font-primary text-blue-400">
               The Future of Motion
             </p>
 
-            <h1 className="max-w-5xl text-5xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl">
-              CINEMATIC<span className="text-white/30">SCROLL</span>
+            <h1 className="max-w-5xl text-5xl font-bold font-primary tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl">
+              Tiffen<span className="text-primary/70">Central</span>
             </h1>
 
             <p className="mx-auto mt-8 max-w-xl text-lg font-light leading-relaxed text-white/60">

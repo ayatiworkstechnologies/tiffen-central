@@ -63,8 +63,8 @@ export default function SouthIndianDelights() {
       {/* Right Side Off-Screen Rotating SVG */}
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
-        className="pointer-events-none absolute right-[-90px] top-1/2 z-[15] -translate-y-1/2 opacity-40 sm:right-[-130px] md:right-[-170px] lg:right-[-220px]"
+        transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+        className="pointer-events-none absolute right-[-160px] top-1/2 z-[15] -translate-y-1/2 opacity-40 sm:right-[-130px] md:right-[-170px] lg:right-[-260px]"
       >
         <Image
           unoptimized
@@ -72,7 +72,7 @@ export default function SouthIndianDelights() {
           alt="Decorative Background Vector"
           width={700}
           height={700}
-          className="h-[240px] w-[240px] object-contain sm:h-[320px] sm:w-[320px] md:h-[420px] md:w-[420px] lg:h-[560px] lg:w-[560px]"
+          className="h-[270px] w-[270px] object-contain sm:h-[370px] sm:w-[370px] md:h-[420px] md:w-[420px] lg:h-[600px] lg:w-[600px]"
         />
       </motion.div>
 
@@ -110,19 +110,7 @@ export default function SouthIndianDelights() {
                 alt="Idli Delight"
                 className="h-[210px] w-full object-cover"
               />
-              <div className="mt-3 flex items-center gap-1">
-                {flowerRow.map((_, i) => (
-                  <Image
-                    unoptimized
-                    width={100}
-                    height={100}
-                    key={i}
-                    src="/vector-logo.svg"
-                    alt="Flower"
-                    className="h-10 w-10 object-contain opacity-90"
-                  />
-                ))}
-              </div>
+
               <h3 className="mt-4 font-serif text-[20px] uppercase leading-[1.05] text-primary">
                 Idli Delight
               </h3>
@@ -180,19 +168,6 @@ export default function SouthIndianDelights() {
               <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
                 Golden, crispy, savory, filled, aromatic, satisfying.
               </p>
-              <div className="mt-3 flex items-center gap-1">
-                {flowerRow.map((_, i) => (
-                  <Image
-                    unoptimized
-                    width={100}
-                    height={100}
-                    key={i}
-                    src="/vector-logo.svg"
-                    alt="Flower"
-                    className="h-10 w-10 object-contain opacity-90"
-                  />
-                ))}
-              </div>
             </motion.div>
 
             <motion.div
@@ -296,19 +271,6 @@ export default function SouthIndianDelights() {
               <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
                 Zesty Lemon Rice
               </h3>
-              <div className="mt-3 flex items-center gap-1">
-                {flowerRow.map((_, i) => (
-                  <Image
-                    unoptimized
-                    width={100}
-                    height={100}
-                    key={i}
-                    src="/vector-logo.svg"
-                    alt="Flower"
-                    className="h-10 w-10 object-contain opacity-90"
-                  />
-                ))}
-              </div>
             </motion.div>
 
             <motion.div

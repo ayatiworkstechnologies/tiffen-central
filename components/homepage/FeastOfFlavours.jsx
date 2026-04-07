@@ -1,323 +1,169 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
-};
-
-const breakfastItems = [
-  "Idli (2)",
-  "Vada",
-  "Sambar Combo",
-  "Ghee Idli",
-  "Pongal",
-  "Poori",
-];
-
-const dosaItems = [
-  "Plain Dosa",
-  "Masala Dosa",
-  "Ghee Roast Dosa",
-  "Onion Dosa",
-  "Podi Masala",
-  "Rava Roast",
-  "Onion Uthappam",
-  "Rava Uthappam",
-  "Butter Masala",
-];
-
-const riceItems = [
-  "Sambar Rice",
-  "Curd Rice",
-  "Puliogare",
-  "Lemon Rice",
-  "Tomato Rice",
-];
-
-const snacksItems = [
-  "Bonda",
-  "Bajji",
-  "Samosa",
-  "Cutlet",
-  "Popcorn Foods",
-  "Cookies",
-];
-
-const beveragesItems = [
-  "Filter Coffee",
-  "Black Coffee",
-  "Tea",
-  "Boost",
-  "Horlicks",
-  "Lemon Tea",
-  "Badam Milk",
-  "Milk",
-];
-
-const coldItems = [
-  "Fresh Juices",
-  "Milkshakes",
-  "Lassi",
-  "Falooda",
-  "Cold Coffee",
-  "Oreo Milkshake",
-];
-
-const sweetsItems = [
-  "Kesari",
-  "Badam Halwa",
-  "Tender Coconut Pudding",
-  "Filter Coffee Cake",
-];
-
-function MenuBlock({ title, items, className = "" }) {
-  return (
-    <div className={`border border-white/20 bg-transparent p-3 ${className}`}>
-      <h3 className="font-serif text-[26px] uppercase leading-[0.95] tracking-[0.02em] text-white">
-        {title}
-      </h3>
-
-      <div className="mt-3 h-px w-full bg-white/25" />
-
-      <ul className="mt-4 space-y-1 text-[11px] leading-[1.45] text-white/80 sm:text-[12px]">
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function MenuImage({ src, alt, className = "" }) {
-  return (
-    <div
-      className={`overflow-hidden border border-white/20 bg-transparent p-1.5 ${className}`}
-    >
-      <Image
-        unoptimized
-        width={800}
-        height={800}
-        src={src}
-        alt={alt}
-        className="h-full w-full object-cover"
-      />
-    </div>
-  );
-}
+import React, { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import MenuModal from "./MenuModal";
 
 export default function FeastOfFlavours() {
   const [openMenu, setOpenMenu] = useState(false);
+  const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") setOpenMenu(false);
-    };
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 85%", "end 40%"],
+  });
 
-    if (openMenu) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleEsc);
-    } else {
-      document.body.style.overflow = "";
-    }
+  // Left content animation
+  const contentY = useTransform(scrollYProgress, [0, 1], [60, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
 
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, [openMenu]);
+  // Right food image animation (comes in from left and settles)
+  const foodX = useTransform(scrollYProgress, [0, 1], [-180, 0]);
+  const foodY = useTransform(scrollYProgress, [0, 1], [60, 0]);
+  const foodRotate = useTransform(scrollYProgress, [0, 1], [-8, 0]);
+  const foodScale = useTransform(scrollYProgress, [0, 1], [0.82, 1]);
+  const foodOpacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
+
+  // Decorative SVG animation behind image
+  const svgY = useTransform(scrollYProgress, [0, 1], [-150, 0]);
+  const svgX = useTransform(scrollYProgress, [0, 1], [130, 0]);
+  const svgRotate = useTransform(scrollYProgress, [0, 1], [-140, 0]);
+  const svgScale = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
+  const svgOpacity = useTransform(scrollYProgress, [0, 0.35], [0, 0.28]);
 
   return (
     <>
-      {/* Main CTA Section */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        variants={staggerContainer}
+      <section
+        ref={sectionRef}
         className="relative overflow-hidden bg-primary px-4 py-16 text-white sm:px-6 md:px-10 lg:px-12"
       >
-        <div className="mx-auto flex min-h-[310px] max-w-6xl flex-col items-center justify-center text-center">
-          <motion.h2 variants={fadeUp} className="font-serif text-[28px] uppercase tracking-[0.06em] sm:text-[34px] md:text-[40px]">
-            A Feast of Flavours
-          </motion.h2>
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-[0.05]">
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundImage: "url('/logo-vector.svg')",
+              backgroundRepeat: "repeat",
+              backgroundSize: "72px 72px",
+            }}
+          />
+        </div>
 
-          <motion.div variants={fadeUp} className="mt-3 h-[1px] w-20 bg-white/70" />
+        {/* Soft glow */}
+        <div className="absolute left-[-8%] top-1/2 h-[240px] w-[240px] -translate-y-1/2 rounded-full bg-white/10 blur-[120px]" />
+        <div className="absolute right-[-6%] top-1/2 h-[320px] w-[320px] -translate-y-1/2 rounded-full bg-white/10 blur-[140px]" />
 
-          <motion.p variants={fadeUp} className="mt-8 max-w-3xl text-[13px] leading-6 text-white/90 sm:text-[14px] md:text-[15px]">
-            From comforting tiffin specials to café-style favorites, our menu is
-            crafted to satisfy every craving. We bring together fresh
-            ingredients, rich flavors, and thoughtfully prepared dishes in every
-            serving. Whether you are in the mood for a quick bite, a hearty
-            meal, or a refreshing beverage, there is something for everyone.
-            Each item is made to offer the perfect balance of taste, quality,
-            and satisfaction. At Tiffen Central, every dish on the menu is
-            served with warmth, flavor, and a touch of delight.
-          </motion.p>
-
-          <motion.button
-            variants={fadeUp}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setOpenMenu(true)}
-            className="mt-8 rounded-full bg-white px-8 py-3 text-sm font-medium tracking-[0.2em] text-primary shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition-colors duration-300 hover:bg-white/90"
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[1.02fr_0.98fr] lg:gap-16">
+          {/* Left Side Content */}
+          <motion.div
+            style={{ y: contentY, opacity: contentOpacity }}
+            className="max-w-2xl text-left"
           >
-            Menu
-          </motion.button>
-        </div>
+            <motion.p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/70 sm:text-sm">
+              Signature Menu
+            </motion.p>
 
-        <div className="absolute bottom-2 left-0 w-full overflow-hidden">
-          <motion.div variants={staggerContainer} className="flex items-center justify-center gap-2 px-2 sm:gap-3">
-            {[...Array(18)].map((_, index) => (
-              <motion.div key={index} variants={fadeUp}>
-                <Image
-                  unoptimized
-                  width={100}
-                  height={100}
-                  src="/logo-vector.svg"
-                  alt="Flower Logo"
-                  className="h-10 w-10 object-contain opacity-90 sm:h-11 sm:w-11 md:h-12 md:w-12"
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
+            <motion.h2 className="font-serif text-[30px] uppercase tracking-[0.05em] sm:text-[38px] md:text-[46px] lg:text-[56px]">
+              A Feast of
+              <span className="block">Flavours</span>
+            </motion.h2>
 
-      {/* Menu Modal */}
-      <AnimatePresence>
-      {openMenu && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[999] bg-black/70 px-4 py-6 backdrop-blur-[2px]"
-          onClick={() => setOpenMenu(false)}
-        >
-          <div className="flex min-h-full items-center justify-center">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={scaleIn}
-              className="relative max-h-[92vh] w-full max-w-[980px] overflow-y-auto bg-primary px-5 py-6 sm:px-7 sm:py-8 md:px-10 md:py-10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close */}
+            <div className="mt-4 h-[1px] w-24 bg-white/70" />
+
+            <motion.p className="mt-8 max-w-xl text-[13px] leading-7 text-white/90 sm:text-[14px] md:text-[15px]">
+              From comforting tiffin specials to café-style favorites, our menu
+              is crafted to satisfy every craving. We bring together fresh
+              ingredients, rich flavors, and thoughtfully prepared dishes in
+              every serving. Whether you are in the mood for a quick bite, a
+              hearty meal, or a refreshing beverage, there is something for
+              everyone.
+            </motion.p>
+
+            <motion.div className="mt-10 flex flex-wrap items-center gap-4">
               <button
-                onClick={() => setOpenMenu(false)}
-                className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center border border-white/20 bg-white/5 text-xl text-white transition hover:bg-white/10"
-                aria-label="Close menu"
+                onClick={() => setOpenMenu(true)}
+                className="rounded-full bg-white px-8 py-3 text-sm font-medium tracking-[0.2em] text-primary shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition duration-300 hover:scale-105"
               >
-                ×
+                Menu
               </button>
 
-              {/* Heading */}
-              <div className="mb-8 text-center">
-                <h2 className="font-serif text-[22px] font-semibold text-white sm:text-[26px]">
-                  Flavours of South India
-                </h2>
-              </div>
+              <button className="rounded-full border border-white/25 bg-white/10 px-8 py-3 text-sm font-medium tracking-[0.16em] text-white backdrop-blur-sm transition duration-300 hover:bg-white/20">
+                Explore
+              </button>
+            </motion.div>
+          </motion.div>
 
-              {/* Editorial menu layout */}
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1fr]">
-                {/* Column 1 */}
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-2.png"
-                    alt="Breakfast Specials"
-                    className="h-[145px]"
-                  />
+          {/* Right Side Visual Area */}
+          <div className="relative flex min-h-[300px] items-center justify-center sm:min-h-[360px] md:min-h-[460px]">
+            {/* Decorative rings */}
+            <div className="absolute h-[240px] w-[240px] rounded-full border border-white/10 sm:h-[300px] sm:w-[300px] md:h-[390px] md:w-[390px]" />
+            <div className="absolute h-[300px] w-[300px] rounded-full border border-white/5 sm:h-[380px] sm:w-[380px] md:h-[470px] md:w-[470px]" />
 
-                  <MenuBlock
-                    title="Breakfast Specials"
-                    items={breakfastItems}
-                  />
+            {/* Rotating bg svg */}
+            <motion.div
+              style={{
+                y: svgY,
+                x: svgX,
+                rotate: svgRotate,
+                scale: svgScale,
+                opacity: svgOpacity,
+              }}
+              className="absolute z-10"
+            >
+              <Image
+                unoptimized
+                src="/bg-vector.svg"
+                alt="Decorative Vector"
+                width={520}
+                height={520}
+                className="h-[190px] w-[190px] object-contain sm:h-[250px] sm:w-[250px] md:h-[340px] md:w-[340px] lg:h-[430px] lg:w-[430px]"
+              />
+            </motion.div>
 
-                  <MenuImage
-                    src="/menu-1.png"
-                    alt="Dosa Varieties"
-                    className="h-[255px]"
-                  />
+            {/* Main image coming from previous section feel */}
+            <motion.div
+              style={{
+                x: foodX,
+                y: foodY,
+                rotate: foodRotate,
+                scale: foodScale,
+                opacity: foodOpacity,
+              }}
+              className="relative z-20 flex items-center justify-center"
+            >
+              <div className="absolute inset-0 rounded-full bg-white/10 blur-[70px]" />
 
-                  <MenuBlock title="Dosa Varieties" items={dosaItems} />
-                </div>
+              <Image
+                unoptimized
+                src="/img-1.png"
+                alt="Tiffen Central Food"
+                width={900}
+                height={900}
+                className="relative z-20 h-auto w-full max-w-[260px] object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.35)] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[480px]"
+              />
+            </motion.div>
 
-                {/* Column 2 */}
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-7.png"
-                    alt="Rice Varieties"
-                    className="h-[110px]"
-                  />
-
-                  <MenuBlock title="Rice Varieties" items={riceItems} />
-
-                  <MenuImage
-                    src="/menu-6.png"
-                    alt="Snacks"
-                    className="h-[120px]"
-                  />
-
-                  <MenuBlock title="Snacks" items={snacksItems} />
-
-                  <MenuImage
-                    src="/menu-5.png"
-                    alt="Sweets"
-                    className="h-[100px]"
-                  />
-
-                  <MenuBlock title="Sweets" items={sweetsItems} />
-                </div>
-
-                {/* Column 3 */}
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-4.png"
-                    alt="Hot Beverages"
-                    className="h-[145px]"
-                  />
-
-                  <MenuBlock title="Hot Beverages" items={beveragesItems} />
-
-                  <MenuImage
-                    src="/menu-3.png"
-                    alt="Cold Beverages"
-                    className="h-[100px]"
-                  />
-
-                  <MenuBlock title="Cold Beverages" items={coldItems} />
-
-                  <div className="border border-white/20 px-4 py-6 text-center">
-                    <h3 className="text-[32px] lowercase tracking-wide text-white">
-                      amruthacafe
-                    </h3>
-                    <p className="mt-2 text-[11px] leading-5 text-white/80">
-                      South Indian Classics
-                      <br />
-                      Made Fresh Daily
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* Small center logo */}
+            <motion.div
+              animate={{ y: [0, -8, 0], rotate: [0, 4, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-4 right-8 z-30"
+            >
+              <Image
+                unoptimized
+                src="/logo-vector.svg"
+                alt="Inner Decorative Logo"
+                width={160}
+                height={160}
+                className="h-[58px] w-[58px] object-contain opacity-90 sm:h-[72px] sm:w-[72px] md:h-[88px] md:w-[88px]"
+              />
             </motion.div>
           </div>
-        </motion.div>
-      )}
-      </AnimatePresence>
+        </div>
+      </section>
+
+      <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
     </>
   );
 }
