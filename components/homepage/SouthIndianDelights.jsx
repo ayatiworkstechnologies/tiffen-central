@@ -88,16 +88,17 @@ export default function SouthIndianDelights() {
           <h2 className="font-serif text-[24px] uppercase tracking-[0.06em] text-primary sm:text-[28px] md:text-[32px]">
             Authentic South Indian Delights
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-[11px] leading-5 text-[#7a7a7a] sm:text-xs">
-            Experience the rich and special tradition of South Indian favorites,
-            crafted with love and served with flavor in every bite.
+          <p className="mx-auto mt-3 max-w-2xl text-[11px] leading-6 text-[#7a7a7a] sm:text-xs">
+            Experience the rich, aromatic tradition of our South Indian favorites.
+            Every dish is crafted with love, using heirloom recipes and premium
+            ingredients to deliver extraordinary flavor in every single bite.
           </p>
         </motion.div>
 
         {/* Editorial Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Column 1 */}
-          <div className="space-y-8">
+          <div className="flex h-full flex-col justify-between gap-8">
             <motion.div
               variants={zoomIn}
               className="bg-white/70 p-3 backdrop-blur-[2px]"
@@ -115,7 +116,7 @@ export default function SouthIndianDelights() {
                 Idli Delight
               </h3>
               <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
-                Soft, fluffy, fresh, light, comforting, and wholesome.
+                Soft, freshly steamed, wholesome, and perfectly comforting for any time of day.
               </p>
             </motion.div>
 
@@ -130,7 +131,7 @@ export default function SouthIndianDelights() {
                   Crunch
                 </h3>
                 <p className="mt-3 text-[12px] leading-5 text-[#6f6f6f]">
-                  Crisp, golden, spiced, savory, and irresistible.
+                  Crisp, golden on the outside, and incredibly soft inside. A savory delight.
                 </p>
               </div>
 
@@ -160,20 +161,17 @@ export default function SouthIndianDelights() {
           </div>
 
           {/* Column 2 */}
-          <div className="space-y-8">
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
-                Crispy Masala Dosa
-              </h3>
-              <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
-                Golden, crispy, savory, filled, aromatic, satisfying.
-              </p>
-            </motion.div>
+          <div className="flex h-full flex-col justify-between gap-8">
+            <motion.div variants={fadeUp} className="p-3 bg-white/80">
+              <div className="p-3">
+                <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
+                  Crispy Masala Dosa
+                </h3>
+                <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
+                  Golden, wafer-thin crepe filled with our signature aromatic potato masala.
+                </p>
+              </div>
 
-            <motion.div
-              variants={zoomIn}
-              className="bg-white/70 p-3 backdrop-blur-[2px]"
-            >
               <Image
                 unoptimized
                 width={800}
@@ -184,19 +182,16 @@ export default function SouthIndianDelights() {
               />
             </motion.div>
 
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
-                Fresh Veg Uttapam
-              </h3>
-              <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
-                Thick, flavorful, colorful, soft, wholesome, delicious.
-              </p>
-            </motion.div>
+            <motion.div variants={fadeUp} className="bg-white/80 p-3">
+              <div className="p-3">
+                <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
+                  Fresh Veg Uttapam
+                </h3>
+                <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
+                  Thick, flavorful, and beautifully studded with fresh vegetables and roasted spices.
+                </p>
+              </div>
 
-            <motion.div
-              variants={zoomIn}
-              className="bg-white/70 p-3 backdrop-blur-[2px]"
-            >
               <Image
                 unoptimized
                 width={800}
@@ -209,8 +204,8 @@ export default function SouthIndianDelights() {
           </div>
 
           {/* Column 3 */}
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 gap-4">
+          <div className="flex h-full flex-col justify-between gap-8">
+            <div className="grid bg-white/80 grid-cols-1 gap-4">
               <motion.div
                 variants={zoomIn}
                 className="bg-white/70 p-3 backdrop-blur-[2px]"
@@ -254,29 +249,28 @@ export default function SouthIndianDelights() {
                   />
                 </motion.div>
               </div>
+              <div className="p-3">
+                <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
+                  Traditional Pongal
+                  <br />
+                  Bowl
+                </h3>
+                <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
+                  Warm, creamy, peppery, comforting, classic, rich.
+                </p>
+              </div>
             </div>
 
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
-                Traditional Pongal
-                <br />
-                Bowl
-              </h3>
-              <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
-                Warm, creamy, peppery, comforting, classic, rich.
-              </p>
-            </motion.div>
+            <motion.div variants={fadeUp} className="bg-white/80 p-3">
+              <div className="p-3">
+                <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
+                  Zesty Lemon Rice
+                </h3>
+                <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
+                  Tangy, vibrant, fragrant, light, homely, refreshing.
+                </p>
+              </div>
 
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
-                Zesty Lemon Rice
-              </h3>
-            </motion.div>
-
-            <motion.div
-              variants={zoomIn}
-              className="bg-white/70 p-3 backdrop-blur-[2px]"
-            >
               <Image
                 unoptimized
                 width={800}
@@ -286,13 +280,6 @@ export default function SouthIndianDelights() {
                 className="h-[180px] w-full object-cover"
               />
             </motion.div>
-
-            <motion.p
-              variants={fadeUp}
-              className="text-[12px] leading-5 text-[#6f6f6f]"
-            >
-              Tangy, vibrant, fragrant, light, homely, refreshing.
-            </motion.p>
           </div>
         </div>
       </motion.div>

@@ -14,8 +14,9 @@ const sora = localFont({
 });
 
 export const metadata = {
-  title: "Tiffen Central",
-  description: "Tiffen Central Restaurant",
+  title: "Tiffen Central | Authentic South Indian Cuisine & Premier Cafe Experience",
+  description: "Discover Tiffen Central, your destination for authentic South Indian tiffins including crispy dosas, fluffy idlis, savory medu vadas, and traditional filter coffee. Enjoy freshly prepared classics crafted with heritage.",
+  keywords: ["South Indian restaurant", "authentic tiffins", "masala dosa", "fresh idli", "cafe dining", "premium coffee", "Amruthacafe"],
 };
 
 export default function RootLayout({ children }) {

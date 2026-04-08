@@ -80,14 +80,16 @@ const sweetsItems = [
 
 function MenuBlock({ title, items, className = "" }) {
   return (
-    <div className={`border border-white/20 bg-transparent p-3 ${className}`}>
-      <h3 className="font-serif text-[26px] uppercase leading-[0.95] tracking-[0.02em] text-white">
+    <div
+      className={`rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm ${className}`}
+    >
+      <h3 className="relative z-10 font-serif text-[24px] uppercase leading-[0.95] tracking-[0.02em] text-white">
         {title}
       </h3>
 
-      <div className="mt-3 h-px w-full bg-white/25" />
+      <div className="relative z-10 mt-3 h-[1px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ul className="mt-4 space-y-1 text-[11px] leading-[1.45] text-white/80 sm:text-[12px]">
+      <ul className="relative z-10 mt-4 space-y-1.5 text-[12px] leading-[1.45] text-white/80 sm:text-[13px]">
         {items.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
@@ -99,7 +101,7 @@ function MenuBlock({ title, items, className = "" }) {
 function MenuImage({ src, alt, className = "" }) {
   return (
     <div
-      className={`overflow-hidden border border-white/20 bg-transparent p-1.5 ${className}`}
+      className={`overflow-hidden rounded-xl border border-white/10 bg-white/5 p-1.5 shadow-sm backdrop-blur-sm ${className}`}
     >
       <Image
         unoptimized
@@ -107,7 +109,7 @@ function MenuImage({ src, alt, className = "" }) {
         height={800}
         src={src}
         alt={alt}
-        className="h-full w-full object-cover"
+        className="h-full w-full rounded-lg object-cover"
       />
     </div>
   );
@@ -139,7 +141,7 @@ export default function MenuModal({ open, onClose }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[999] bg-black/70 px-4 py-6 backdrop-blur-[2px]"
+          className="fixed inset-0 z-[1000] bg-black/40 px-4 py-6 backdrop-blur-md"
           onClick={onClose}
         >
           <div className="flex min-h-full items-center justify-center">
@@ -148,12 +150,14 @@ export default function MenuModal({ open, onClose }) {
               animate="visible"
               exit="hidden"
               variants={scaleIn}
-              className="relative max-h-[92vh] w-full max-w-[980px] overflow-y-auto bg-primary px-5 py-6 sm:px-7 sm:py-8 md:px-10 md:py-10"
+              className="relative max-h-[92vh] w-full max-w-[980px] overflow-y-auto rounded-3xl border border-white/10 bg-[#032818]/70 px-5 py-6 shadow-[0_30px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:px-7 sm:py-8 md:px-10 md:py-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_40%)]" />
+
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center border border-white/20 bg-white/5 text-xl text-white transition hover:bg-white/10"
+                className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xl text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-white/20"
                 aria-label="Close menu"
               >
                 ×
@@ -166,64 +170,84 @@ export default function MenuModal({ open, onClose }) {
               </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1fr]">
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-2.png"
-                    alt="Breakfast Specials"
-                    className="h-[145px]"
-                  />
-                  <MenuBlock
-                    title="Breakfast Specials"
-                    items={breakfastItems}
-                  />
-                  <MenuImage
-                    src="/menu-1.png"
-                    alt="Dosa Varieties"
-                    className="h-[255px]"
-                  />
-                  <MenuBlock title="Dosa Varieties" items={dosaItems} />
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-2.png"
+                      alt="Breakfast Specials"
+                      className="h-[145px]"
+                    />
+                    <MenuBlock
+                      title="Breakfast Specials"
+                      items={breakfastItems}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-1.png"
+                      alt="Dosa Varieties"
+                      className="h-[255px]"
+                    />
+                    <MenuBlock title="Dosa Varieties" items={dosaItems} />
+                  </div>
                 </div>
 
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-7.png"
-                    alt="Rice Varieties"
-                    className="h-[110px]"
-                  />
-                  <MenuBlock title="Rice Varieties" items={riceItems} />
-                  <MenuImage
-                    src="/menu-6.png"
-                    alt="Snacks"
-                    className="h-[120px]"
-                  />
-                  <MenuBlock title="Snacks" items={snacksItems} />
-                  <MenuImage
-                    src="/menu-5.png"
-                    alt="Sweets"
-                    className="h-[100px]"
-                  />
-                  <MenuBlock title="Sweets" items={sweetsItems} />
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-7.png"
+                      alt="Rice Varieties"
+                      className="h-[110px]"
+                    />
+                    <MenuBlock title="Rice Varieties" items={riceItems} />
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-6.png"
+                      alt="Snacks"
+                      className="h-[120px]"
+                    />
+                    <MenuBlock title="Snacks" items={snacksItems} />
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-5.png"
+                      alt="Sweets"
+                      className="h-[100px]"
+                    />
+                    <MenuBlock title="Sweets" items={sweetsItems} />
+                  </div>
                 </div>
 
-                <div className="space-y-4">
-                  <MenuImage
-                    src="/menu-4.png"
-                    alt="Hot Beverages"
-                    className="h-[145px]"
-                  />
-                  <MenuBlock title="Hot Beverages" items={beveragesItems} />
-                  <MenuImage
-                    src="/menu-3.png"
-                    alt="Cold Beverages"
-                    className="h-[100px]"
-                  />
-                  <MenuBlock title="Cold Beverages" items={coldItems} />
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-4.png"
+                      alt="Hot Beverages"
+                      className="h-[145px]"
+                    />
+                    <MenuBlock title="Hot Beverages" items={beveragesItems} />
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <MenuImage
+                      src="/menu-3.png"
+                      alt="Cold Beverages"
+                      className="h-[100px]"
+                    />
+                    <MenuBlock title="Cold Beverages" items={coldItems} />
+                  </div>
 
-                  <div className="border border-white/20 px-4 py-6 text-center">
-                    <h3 className="text-[32px] lowercase tracking-wide text-white">
-                      amruthacafe
-                    </h3>
-                    <p className="mt-2 text-[11px] leading-5 text-white/80">
+                  <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 px-6 py-10 text-center shadow-sm backdrop-blur-sm">
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent)]" />
+                    <Image
+                      unoptimized
+                      width={400}
+                      height={400}
+                      src="/logo.png"
+                      alt="Tiffen Central Logo"
+                      className="relative z-10 h-auto w-full max-w-[180px] object-contain opacity-100 brightness-0 invert filter"
+                    />
+                    <p className="relative z-10 mt-5 text-[12px] uppercase leading-snug tracking-widest text-white/80">
                       South Indian Classics
                       <br />
                       Made Fresh Daily

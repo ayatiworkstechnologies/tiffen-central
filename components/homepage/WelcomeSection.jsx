@@ -2,151 +2,200 @@
 
 import Image from "next/image";
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.9,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.1,
+      staggerChildren: 0.16,
+      delayChildren: 0.15,
     },
   },
 };
 
-export default function WelcomeSection() {
+export default function WelcomeSectionPremium() {
   const sectionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 85%", "end 45%"],
+    offset: ["start 90%", "end 20%"],
   });
 
-  // Main food image animation: comes from right to left and settles
-  //   const imageX = useTransform(scrollYProgress, [0, 1], [180, 0]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [40, 0]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
-  //   const imageRotate = useTransform(scrollYProgress, [0, 1], [8, 0]);
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-  const imageX = useTransform(scrollYProgress, [0, 1], [180, 0]);
-  const imageRotate = useTransform(scrollYProgress, [0, 1], [8, 0]);
-  // Pattern slight motion
-  const patternY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  // Image entrance from right to center
+  const imageXRaw = useTransform(scrollYProgress, [0, 0.38], ["160%", "0%"]);
+  const imageRotateRaw = useTransform(scrollYProgress, [0, 0.38], [22, 0]);
+  const imageScaleRaw = useTransform(scrollYProgress, [0, 0.38], [0.72, 1]);
+  const imageOpacityRaw = useTransform(scrollYProgress, [0, 0.18], [0, 1]);
 
-  // Content subtle reveal
-  const contentY = useTransform(scrollYProgress, [0, 1], [40, 0]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
+  // Premium parallax after landing
+  const imageYRaw = useTransform(scrollYProgress, [0.35, 1], [0, -40]);
+
+  const imageX = useSpring(imageXRaw, {
+    stiffness: 70,
+    damping: 22,
+    mass: 0.35,
+  });
+  const imageRotate = useSpring(imageRotateRaw, {
+    stiffness: 70,
+    damping: 22,
+    mass: 0.35,
+  });
+  const imageScale = useSpring(imageScaleRaw, {
+    stiffness: 70,
+    damping: 22,
+    mass: 0.35,
+  });
+  const imageY = useSpring(imageYRaw, {
+    stiffness: 50,
+    damping: 18,
+    mass: 0.4,
+  });
+
+  // Left background pattern movement
+  const patternY = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const patternScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
+  // Ambient glow movement
+  const glowY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const glowOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 1],
+    [0.25, 0.5, 0.3],
+  );
+
+  // Right content reveal
+  const contentOpacity = useTransform(scrollYProgress, [0.12, 0.32], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.12, 0.32], [60, 0]);
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-white"
     >
-      <div className="grid w-full overflow-hidden md:grid-cols-[58%_42%]">
-        {/* Left Image Panel */}
-        <div className="relative flex min-h-[380px] items-center justify-center bg-primary sm:min-h-[460px] md:min-h-[560px] lg:min-h-[640px]">
+      <div className="grid w-full md:grid-cols-[55%_45%]">
+        {/* LEFT PANEL */}
+        <div className="relative z-10 flex min-h-[500px] items-center justify-center overflow-hidden bg-[#004d43] sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
+          {/* Soft Glow */}
+          <motion.div
+            style={{ y: glowY, opacity: glowOpacity }}
+            className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-200/10 blur-3xl"
+          />
+
           {/* Pattern Background */}
           <motion.div
-            style={{ y: patternY }}
-            className="absolute inset-0 opacity-[0.05]"
+            style={{ y: patternY, scale: patternScale }}
+            className="absolute inset-0 opacity-[0.08]"
           >
             <div
               className="h-full w-full"
               style={{
                 backgroundImage: "url('/logo-vector.svg')",
                 backgroundRepeat: "repeat",
-                backgroundSize: "72px 72px",
+                backgroundSize: "90px 90px",
               }}
             />
           </motion.div>
 
-          {/* Premium light overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-black/10" />
-          <div className="absolute left-[-10%] top-1/2 h-[220px] w-[220px] -translate-y-1/2 rounded-full bg-white/10 blur-[100px]" />
-          <div className="absolute right-[-5%] top-[25%] h-[180px] w-[180px] rounded-full bg-white/8 blur-[90px]" />
+          {/* Decorative Gradient */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.12))]" />
 
-          {/* Main Food Image */}
+          {/* IMAGE */}
           <motion.div
             style={{
               x: imageX,
               y: imageY,
-              scale: imageScale,
               rotate: imageRotate,
-              opacity: imageOpacity,
+              scale: imageScale,
+              opacity: imageOpacityRaw,
             }}
-            className="relative z-10 flex items-center justify-center px-6 py-10 sm:px-8 md:px-10"
+            className="relative z-20 flex items-center justify-center px-6 py-10 sm:px-10 md:px-12"
           >
-            <Image
-              unoptimized
-              width={1000}
-              height={1000}
-              src="/img-1.png"
-              alt="Tiffen Central Food"
-              className="h-auto w-full max-w-[420px] object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.32)] sm:max-w-[470px] md:max-w-[520px] lg:max-w-[580px]"
-            />
+            <div className="relative">
+              {/* Shadow plate */}
+              <div className="absolute left-1/2 top-[82%] h-10 w-[70%] -translate-x-1/2 rounded-full bg-black/30 blur-2xl" />
+
+              <Image
+                unoptimized
+                width={700}
+                height={700}
+                src="/img-1.png"
+                alt="Tiffen Central Dish"
+                className="relative h-auto w-full max-w-[320px] object-contain drop-shadow-[0_35px_80px_rgba(0,0,0,0.45)] sm:max-w-[420px] md:max-w-[470px] lg:max-w-[560px]"
+              />
+            </div>
           </motion.div>
         </div>
 
-        {/* Right Content Panel */}
-        <div className="flex items-center bg-[#f8f8f6] px-6 py-12 sm:px-8 md:px-10 lg:px-14 xl:px-20">
+        {/* RIGHT PANEL */}
+        <div className="relative z-30 flex items-center overflow-hidden bg-[#f9f9f7] px-8 py-16 sm:px-12 md:px-16 lg:px-20">
+          {/* subtle background texture */}
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,77,67,0.03),transparent_35%,rgba(0,77,67,0.04))]" />
+          <div className="absolute right-[-80px] top-[-80px] h-[220px] w-[220px] rounded-full bg-[#004d43]/5 blur-3xl" />
+
           <motion.div
-            style={{ y: contentY, opacity: contentOpacity }}
-            className="max-w-xl"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={staggerContainer}
+            style={{ opacity: contentOpacity, y: contentY }}
+            className="relative z-10 w-full"
           >
-            <motion.p
-              variants={fadeUp}
-              className="mb-4 text-[11px] uppercase tracking-[0.28em] text-primary/70 sm:text-sm"
-            >
-              Our Story
-            </motion.p>
-
-            <motion.h2
-              variants={fadeUp}
-              className="font-serif text-[28px] uppercase tracking-[0.06em] text-primary sm:text-[32px] md:text-[36px] lg:text-[40px]"
-            >
-              Welcome to Tiffen Central
-            </motion.h2>
-
-            <motion.p
-              variants={fadeUp}
-              className="mt-6 text-sm leading-7 text-[#6d6d6d] sm:text-[15px] md:text-[15.5px]"
-            >
-              Tiffen Central is a warm and welcoming space where café comfort
-              meets restaurant-style dining. We serve freshly prepared tiffin,
-              flavorful refreshments, beverages, and tasty bites for every mood.
-              Whether you are stopping by for breakfast, coffee, lunch, or
-              dinner, every visit feels special. Our inviting ambiance, quality
-              ingredients, and satisfying menu make us perfect for friends and
-              families alike. At Tiffen Central, great food and good moments
-              always come together.
-            </motion.p>
-
             <motion.div
-              variants={fadeUp}
-              className="mt-8 h-[1px] w-20 bg-[#8bb9a8]"
-            />
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={staggerContainer}
+              className="max-w-xl"
+            >
+              <motion.p
+                variants={fadeUp}
+                className="mb-4 text-[12px] font-bold uppercase tracking-[0.35em] text-[#004d43]/55"
+              >
+                Our Legacy
+              </motion.p>
 
-            <motion.div variants={fadeUp} className="mt-8">
-              <button className="rounded-full bg-primary px-7 py-3 text-sm font-medium tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(0,0,0,0.12)] transition duration-300 hover:scale-105 hover:bg-primary/90">
-                Explore More
-              </button>
+              <motion.h2
+                variants={fadeUp}
+                className="font-serif text-[34px] uppercase leading-[1.05] tracking-[0.06em] text-[#004d43] sm:text-[42px] md:text-[46px] lg:text-[52px]"
+              >
+                Welcome to <br />
+                <span className="opacity-80">Tiffen Central</span>
+              </motion.h2>
+
+              <motion.div
+                variants={fadeUp}
+                className="mt-7 h-[2px] w-20 bg-[#004d43]/20"
+              />
+
+              <motion.p
+                variants={fadeUp}
+                className="mt-8 max-w-lg text-[15px] leading-[1.9] text-gray-600 md:text-[16px]"
+              >
+                Tiffen Central is a warm, vibrant space where café comfort
+                seamlessly meets premium restaurant-style dining. We specialize
+                in freshly prepared, authentic South Indian tiffins—from crispy,
+                golden dosas and fluffy idlis to aromatic filter coffee and
+                flavorful daily specials. Every dish is crafted from rich heritage
+                recipes to satisfy your cravings.
+              </motion.p>
+
+              <motion.div
+                variants={fadeUp}
+                className="mt-10 flex items-center gap-4"
+              >
+                <button className="group relative overflow-hidden rounded-full bg-[#004d43] px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(0,77,67,0.22)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(0,77,67,0.28)]">
+                  <span className="absolute inset-0 translate-y-full bg-white/10 transition-transform duration-500 group-hover:translate-y-0" />
+                  <span className="relative z-10">
+                    Explore Our Authentic Menu
+                  </span>
+                </button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
