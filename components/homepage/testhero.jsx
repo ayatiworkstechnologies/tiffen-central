@@ -205,12 +205,7 @@ export default function HeroSection() {
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
               <Button variant="secondary">Explore Menu</Button>
-              <Button
-                variant="outline"
-                className="!text-white !border-white/30 hover:!bg-white/10"
-              >
-                Book Table
-              </Button>
+              <Button variant="light">Book Table</Button>
             </motion.div>
 
             {/* Info Highlights */}

@@ -175,7 +175,7 @@ export default function WelcomeSectionPremium() {
                 </motion.p>
 
                 <div className="mt-10 flex items-center gap-6">
-                  <Button variant="secondary" onClick={() => setOpenMenu(true)}>
+                  <Button variant="primary" onClick={() => setOpenMenu(true)}>
                     View Menu
                   </Button>
                 </div>
