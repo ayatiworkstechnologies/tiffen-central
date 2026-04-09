@@ -88,7 +88,12 @@ export default function FeastOfFlavours() {
               variants={fadeUp}
               className="mt-10 flex items-center gap-4"
             >
-              <Button variant="secondary" onClick={() => setOpenMenu(true)}>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  document.getElementById("delights")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
                 Explore Our Authentic Menu
               </Button>
             </motion.div>
@@ -133,6 +138,8 @@ export default function FeastOfFlavours() {
           </div>
         </div>
       </section>
+
+      <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
     </>
   );
 }

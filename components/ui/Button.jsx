@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-/* ── Fill color per variant (the liquid) ── */
+/* ── Fill color per variant (the liquid that rises) ── */
 const fillColors = {
   primary: "bg-white",
   secondary: "bg-primary",
@@ -12,7 +12,7 @@ const fillColors = {
   ghost: "bg-primary",
 };
 
-/* ── Text color AFTER fill completes (inverted) ── */
+/* ── Text color AFTER fill (inverted) ── */
 const fillTextColors = {
   primary: "group-hover:text-primary",
   secondary: "group-hover:text-white",
@@ -60,7 +60,7 @@ export default function Button({
       `}
       {...props}
     >
-      {/* ── Text layer (sits above the fill) ── */}
+      {/* Text layer */}
       <span
         className={`relative z-10 transition-colors duration-500 ${
           fillTextColors[variant] || fillTextColors.primary
@@ -69,28 +69,14 @@ export default function Button({
         {children}
       </span>
 
-      {/* ── Water-fill layer — rises from bottom on hover ── */}
+      {/* Fill layer — simple bottom-to-top on hover */}
       <span
         className={`
           absolute inset-0 z-0
-          translate-y-full transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]
+          translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
           group-hover:translate-y-0
           ${fillColors[variant] || fillColors.primary}
         `}
-      />
-
-      {/* ── Wavy leading edge (curved top of the fill) ── */}
-      <span
-        className={`
-          absolute left-[-5%] right-[-5%] z-[1] h-3
-          translate-y-full transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-          group-hover:translate-y-0
-          ${fillColors[variant] || fillColors.primary}
-        `}
-        style={{
-          bottom: "calc(100% - 2px)",
-          borderRadius: "0 0 50% 50% / 0 0 100% 100%",
-        }}
       />
     </motion.button>
   );

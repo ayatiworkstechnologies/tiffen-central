@@ -1,11 +1,13 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Button from "../ui/Button";
+import MenuModal from "./MenuModal";
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -85,6 +87,7 @@ export default function HeroSection() {
   const hoursScale = useTransform(smooth, [0.8, 0.92], [0.85, 1]);
 
   return (
+    <>
     <section ref={sectionRef} className="relative h-[420vh] bg-primary">
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* background */}
@@ -204,8 +207,17 @@ export default function HeroSection() {
               }}
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
-              <Button variant="secondary">Explore Menu</Button>
-              <Button variant="light">Book Table</Button>
+              <Button variant="secondary" onClick={() => setOpenMenu(true)}>
+                Explore Menu
+              </Button>
+              <Button
+                variant="light"
+                onClick={() => {
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Book Table
+              </Button>
             </motion.div>
 
             {/* Info Highlights */}
@@ -247,5 +259,8 @@ export default function HeroSection() {
         </motion.div>
       </div>
     </section>
+
+    <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
+  </>
   );
 }
