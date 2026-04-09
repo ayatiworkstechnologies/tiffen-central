@@ -12,17 +12,26 @@ import HeroSection from "@/components/homepage/testhero";
 
 export default function Home() {
   return (
-   <>
-   {/* <AnimatedHero /> */}
-   <HeroSection />
-   {/* <SouthIndianHero /> */}
-   {/* <SouthIndianHero1 /> */}
-   <LogoStrip />
-   <WelcomeSection />
-   <FeastOfFlavours />
-   <SouthIndianDelights />
-   <TiffenHeroHotspot />
-   <ContactUs />
-   </>
+    <>
+      <div id="home">
+        <HeroSection />
+      </div>
+      <LogoStrip />
+      <div id="about">
+        <FeastOfFlavours />
+      </div>
+      <div id="feast">
+        <WelcomeSection />
+      </div>
+      <div id="delights">
+        <SouthIndianDelights />
+      </div>
+      <div id="signature">
+        <TiffenHeroHotspot />
+      </div>
+      <div id="contact">
+        <ContactUs />
+      </div>
+    </>
   );
 }

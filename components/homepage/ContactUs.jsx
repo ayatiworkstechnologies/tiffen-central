@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail, FiSend } from "react-icons/fi";
+import Button from "../ui/Button";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -156,16 +157,16 @@ export default function ContactUs() {
                   />
                 </Field>
 
-                <button
-                  type="button"
-                  className="group mt-1 inline-flex w-full items-center justify-center overflow-hidden rounded-[16px] bg-primary px-7 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-white shadow-[0_10px_22px_rgba(3,40,24,0.14)] transition-all duration-500 hover:-translate-y-[1px] hover:bg-[#05281c]"
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full"
                 >
-                  <span className="absolute inset-0 translate-y-full bg-white/10 transition-transform duration-500 group-hover:translate-y-0" />
-                  <span className="relative z-10 flex items-center gap-2.5">
+                  <span className="flex items-center gap-2.5">
                     Send Message
                     <FiSend className="text-[14px] transition-transform duration-500 group-hover:translate-x-1" />
                   </span>
-                </button>
+                </Button>
               </form>
             </div>
           </motion.div>

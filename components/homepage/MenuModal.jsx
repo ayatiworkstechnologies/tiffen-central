@@ -157,10 +157,22 @@ export default function MenuModal({ open, onClose }) {
 
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xl text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-white/20"
+                className="group absolute right-6 top-6 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-500 hover:rotate-90 hover:border-white/30 hover:bg-white/10 active:scale-90 sm:right-8 sm:top-8"
                 aria-label="Close menu"
               >
-                ×
+                <svg
+                  className="h-5 w-5 transition-transform duration-500 group-hover:scale-110"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
 
               <div className="mb-8 text-center">

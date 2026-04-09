@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import Button from "../ui/Button";
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
@@ -12,9 +13,9 @@ export default function HeroSection() {
   });
 
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 34,
-    damping: 22,
-    mass: 0.85,
+    stiffness: 30,
+    damping: 24,
+    mass: 1.05,
     restDelta: 0.001,
   });
 
@@ -80,13 +81,16 @@ export default function HeroSection() {
   const subTextOpacity = useTransform(smooth, [0.72, 0.86, 0.96], [0, 0.7, 1]);
   const subTextY = useTransform(smooth, [0.72, 0.96], [34, 0]);
 
+  const hoursOpacity = useTransform(smooth, [0.8, 0.92], [0, 1]);
+  const hoursScale = useTransform(smooth, [0.8, 0.92], [0.85, 1]);
+
   return (
-    <section ref={sectionRef} className="relative h-[420vh] bg-[#b87455]">
+    <section ref={sectionRef} className="relative h-[420vh] bg-primary">
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* background */}
         <motion.div
           style={{ opacity: bgOpacity, scale: bgScale }}
-          className="absolute inset-0 bg-[#b87455]"
+          className="absolute inset-0 bg-primary"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_50%)]" />
         </motion.div>
@@ -102,7 +106,15 @@ export default function HeroSection() {
             }}
             className="text-center"
           >
-            <h1 className="text-[40px] font-medium tracking-[-0.05em] text-white sm:text-[62px] md:text-[90px] lg:text-[118px]">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="mb-3 text-[10px] font-bold uppercase tracking-[0.4em] text-white/50"
+            >
+              Authentic South Indian
+            </motion.p>
+            <h1 className="font-serif text-[44px] font-medium tracking-[-0.03em] text-white sm:text-[68px] md:text-[96px] lg:text-[124px]">
               Tiffen Center
             </h1>
           </motion.div>
@@ -165,10 +177,10 @@ export default function HeroSection() {
                 y: finalTextY,
                 scale: finalTextScale,
               }}
-              className="text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl md:text-7xl lg:text-[108px]"
+              className="font-serif text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl md:text-7xl lg:text-7xl"
             >
               Taste that
-              <span className="block text-[#ffd3b8]">stays with you</span>
+              <span className="block text-white/90 italic">stays with you</span>
             </motion.h2>
 
             <motion.p
@@ -178,8 +190,11 @@ export default function HeroSection() {
               }}
               className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/80 sm:text-base md:text-lg"
             >
-              Freshly prepared tiffin, timeless flavors, and a warm dining
-              experience crafted for every food lover.
+              From the heart of Chennai to your table, we bring you the most
+              authentic flavors of South India. Our chefs use tradition-honored
+              recipes and hand-ground spices to create the perfect tiffin
+              experience. Freshly prepared, timeless flavors, and a warm dining
+              atmosphere.
             </motion.p>
 
             <motion.div
@@ -189,12 +204,36 @@ export default function HeroSection() {
               }}
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
-              <button className="rounded-full bg-white px-7 py-3 text-sm font-medium text-[#8f5a41] transition duration-300 hover:scale-105">
-                Explore Menu
-              </button>
-              <button className="rounded-full border border-white/40 px-7 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/10">
+              <Button variant="secondary">Explore Menu</Button>
+              <Button
+                variant="outline"
+                className="!text-white !border-white/30 hover:!bg-white/10"
+              >
                 Book Table
-              </button>
+              </Button>
+            </motion.div>
+
+            {/* Info Highlights */}
+            <motion.div
+              style={{ opacity: hoursOpacity, scale: hoursScale }}
+              className="mt-12 flex flex-wrap items-center justify-center gap-6"
+            >
+              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 backdrop-blur-md">
+                <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
+                  Open Daily: 7:00 AM — 10:30 PM
+                </span>
+              </div>
+              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 backdrop-blur-md">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
+                  EST. 1994
+                </span>
+              </div>
+              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 backdrop-blur-md">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
+                  Chennai Authentic
+                </span>
+              </div>
             </motion.div>
           </div>
         </div>

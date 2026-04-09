@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import MenuModal from "./MenuModal";
+import Button from "../ui/Button";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -24,6 +26,7 @@ const staggerContainer = {
 };
 
 export default function WelcomeSectionPremium() {
+  const [openMenu, setOpenMenu] = useState(false);
   const sectionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -78,128 +81,111 @@ export default function WelcomeSectionPremium() {
   const contentY = useTransform(scrollYProgress, [0.12, 0.32], [60, 0]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full overflow-hidden bg-white"
-    >
-      <div className="grid w-full md:grid-cols-[55%_45%]">
-        {/* LEFT PANEL */}
-        <div className="relative z-10 flex min-h-[500px] items-center justify-center overflow-hidden bg-primary sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
-          {/* Soft Glow */}
-          <motion.div
-            style={{ y: glowY, opacity: glowOpacity }}
-            className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-100/10 blur-3xl"
-          />
-
-          {/* Pattern Background */}
-          <motion.div
-            style={{ y: patternY, scale: patternScale }}
-            className="absolute inset-0 opacity-[0.08]"
-          >
-            <div
-              className="h-full w-full"
-              style={{
-                backgroundImage: "url('/logo-vector.svg')",
-                backgroundRepeat: "repeat",
-                backgroundSize: "90px 90px",
-              }}
-            />
-          </motion.div>
-
-          {/* Decorative Gradient */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.12))]" />
-
-          {/* IMAGE */}
-          <motion.div
-            style={{
-              x: imageX,
-              y: imageY,
-              rotate: imageRotate,
-              scale: imageScale,
-              opacity: imageOpacityRaw,
-            }}
-            className="relative z-20 flex items-center justify-center px-6 py-10 sm:px-10 md:px-12"
-          >
-            <div className="relative">
-              {/* Shadow plate */}
-              <div className="absolute left-1/2 top-[82%] h-10 w-[70%] -translate-x-1/2 rounded-full bg-black/30 blur-2xl" />
-
-              <Image
-                unoptimized
-                width={700}
-                height={700}
-                src="/img-1.png"
-                alt="Tiffen Central Dish"
-                className="relative h-auto w-full max-w-[320px] object-contain drop-shadow-[0_35px_80px_rgba(0,0,0,0.45)] sm:max-w-[420px] md:max-w-[470px] lg:max-w-[560px]"
-              />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* RIGHT PANEL */}
-        <div className="relative z-30 flex items-center overflow-hidden bg-background px-8 py-16 sm:px-12 md:px-16 lg:px-20">
-          {/* subtle background texture */}
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--color-primary)/0.03,transparent_35%,var(--color-primary)/0.04)]" />
-          <div className="absolute right-[-80px] top-[-80px] h-[220px] w-[220px] rounded-full bg-primary/5 blur-3xl" />
-
-          <motion.div
-            style={{ opacity: contentOpacity, y: contentY }}
-            className="relative z-10 w-full"
-          >
+    <>
+      <section
+        ref={sectionRef}
+        className="relative w-full overflow-hidden bg-white"
+      >
+        <div className="grid w-full md:grid-cols-[55%_45%]">
+          {/* LEFT PANEL */}
+          <div className="relative z-10 flex min-h-[500px] items-center justify-center overflow-hidden bg-primary sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
+            {/* Soft Glow */}
             <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={staggerContainer}
-              className="max-w-xl"
+              style={{ y: glowY, opacity: glowOpacity }}
+              className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-100/10 blur-3xl"
+            />
+
+            {/* Decorative Gradient */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.12))]" />
+
+            {/* IMAGE */}
+            <motion.div
+              style={{
+                x: imageX,
+                y: imageY,
+                rotate: imageRotate,
+                scale: imageScale,
+                opacity: imageOpacityRaw,
+              }}
+              className="relative z-20 flex items-center justify-center px-6 py-10 sm:px-10 md:px-12"
             >
-              <motion.p
-                variants={fadeUp}
-                className="mb-4 text-[12px] font-bold uppercase tracking-[0.35em] text-primary/55"
-              >
-                Our Legacy
-              </motion.p>
+              <div className="relative">
+                {/* Shadow plate */}
+                <div className="absolute left-1/2 top-[82%] h-10 w-[70%] -translate-x-1/2 rounded-full bg-black/30 blur-2xl" />
 
-              <motion.h2
-                variants={fadeUp}
-                className="font-serif text-[34px] uppercase leading-[1.05] tracking-[0.06em] text-primary sm:text-[42px] md:text-[46px] lg:text-[52px]"
-              >
-                Welcome to <br />
-                <span className="opacity-80">Tiffen Central</span>
-              </motion.h2>
+                <Image
+                  unoptimized
+                  width={700}
+                  height={700}
+                  src="/img-1.png"
+                  alt="Tiffen Central Dish"
+                  className="relative h-auto w-full max-w-[320px] object-contain drop-shadow-[0_35px_80px_rgba(0,0,0,0.45)] sm:max-w-[420px] md:max-w-[470px] lg:max-w-[560px]"
+                />
+              </div>
+            </motion.div>
+          </div>
 
+          {/* RIGHT PANEL */}
+          <div className="relative z-30 flex items-center overflow-hidden bg-background px-8 py-16 sm:px-12 md:px-16 lg:px-20">
+            {/* subtle background texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--color-primary)/0.03,transparent_35%,var(--color-primary)/0.04)]" />
+            <div className="absolute right-[-80px] top-[-80px] h-[220px] w-[220px] rounded-full bg-primary/5 blur-3xl" />
+
+            <motion.div
+              style={{ opacity: contentOpacity, y: contentY }}
+              className="relative z-10 w-full"
+            >
               <motion.div
-                variants={fadeUp}
-                className="mt-7 h-[2px] w-20 bg-primary/20"
-              />
-
-              <motion.p
-                variants={fadeUp}
-                className="mt-8 max-w-lg text-[15px] leading-[1.9] text-gray-600 md:text-[16px]"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={staggerContainer}
+                className="max-w-xl"
               >
-                Tiffen Central is a warm, vibrant space where café comfort
-                seamlessly meets premium restaurant-style dining. We specialize
-                in freshly prepared, authentic South Indian tiffins—from crispy,
-                golden dosas and fluffy idlis to aromatic filter coffee and
-                flavorful daily specials. Every dish is crafted from rich heritage
-                recipes to satisfy your cravings.
-              </motion.p>
+                <motion.p
+                  variants={fadeUp}
+                  className="mb-4 text-[12px] font-bold uppercase tracking-[0.35em] text-primary/55"
+                >
+                  Signature Menu
+                </motion.p>
 
-              <motion.div
-                variants={fadeUp}
-                className="mt-10 flex items-center gap-4"
-              >
-                <button className="group relative overflow-hidden rounded-full bg-primary px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(3,40,24,0.14)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(3,40,24,0.22)]">
-                  <span className="absolute inset-0 translate-y-full bg-white/10 transition-transform duration-500 group-hover:translate-y-0" />
-                  <span className="relative z-10">
-                    Explore Our Authentic Menu
-                  </span>
-                </button>
+                <motion.h2
+                  variants={fadeUp}
+                  className="font-serif text-[34px] uppercase leading-[1.05] tracking-[0.06em] text-primary sm:text-[42px] md:text-[46px] lg:text-[52px]"
+                >
+                  A Feast of
+                  <br />
+                  Flavours
+                </motion.h2>
+
+                <motion.div
+                  variants={fadeUp}
+                  className="mt-7 h-[2px] w-20 bg-primary/20"
+                />
+
+                <motion.p
+                  variants={fadeUp}
+                  className="mt-8 max-w-lg text-[15px] leading-[1.9] text-gray-600 md:text-[16px]"
+                >
+                  Indulge in our freshly prepared tiffins and beloved café
+                  classics, meticulously crafted to satisfy every craving. We
+                  bring together premium ingredients, traditional spices, and
+                  authentic South Indian culinary heritage for an unforgettable
+                  dining experience.{" "}
+                </motion.p>
+
+                <div className="mt-10 flex items-center gap-6">
+                  <Button variant="secondary" onClick={() => setOpenMenu(true)}>
+                    View Menu
+                  </Button>
+                </div>
               </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
+    </>
   );
 }

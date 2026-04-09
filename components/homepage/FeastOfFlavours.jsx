@@ -4,7 +4,16 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import MenuModal from "./MenuModal";
+import Button from "../ui/Button";
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 export default function FeastOfFlavours() {
   const [openMenu, setOpenMenu] = useState(false);
   const sectionRef = useRef(null);
@@ -47,20 +56,6 @@ export default function FeastOfFlavours() {
         <div className="absolute inset-0 pointer-events-none select-none">
           <div className="absolute -left-20 top-0 h-[500px] w-[500px] rounded-full bg-white/5 blur-[100px]" />
           <div className="absolute -right-10 bottom-0 h-[400px] w-[400px] rounded-full bg-black/20 blur-[80px]" />
-
-          <motion.div
-            style={{ y: useTransform(smoothProgress, [0, 1], [0, -100]) }}
-            className="absolute inset-0 opacity-[0.03]"
-          >
-            <div
-              className="h-full w-full"
-              style={{
-                backgroundImage: "url('/logo-vector.svg')",
-                backgroundSize: "60px",
-                backgroundRepeat: "repeat",
-              }}
-            />
-          </motion.div>
         </div>
 
         <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2">
@@ -70,29 +65,33 @@ export default function FeastOfFlavours() {
             className="flex flex-col items-start order-2 md:order-1"
           >
             <motion.span className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-white/50">
-              Signature Menu
+              Our Legacy
             </motion.span>
 
-            <h2 className="font-serif text-5xl leading-[1.1] sm:text-7xl">
-              A Feast of <br />
-              <span className="italic font-normal text-white/70">Flavours</span>
+            <h2 className="font-serif text-5xl leading-[1.1] sm:text-5xl">
+              Welcome to <br />
+              <span className="italic font-normal text-white/80">
+                Tiffen Central
+              </span>
             </h2>
 
             <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-white/60">
-              Indulge in our freshly prepared tiffins and beloved café classics,
-              meticulously crafted to satisfy every craving. We bring together
-              premium ingredients, traditional spices, and authentic South Indian
-              culinary heritage for an unforgettable dining experience.
+              Tiffen Central is a warm, vibrant space where café comfort
+              seamlessly meets premium restaurant-style dining. We specialize in
+              freshly prepared, authentic South Indian tiffins—from crispy,
+              golden dosas and fluffy idlis to aromatic filter coffee and
+              flavorful daily specials. Every dish is crafted from rich heritage
+              recipes to satisfy your cravings.{" "}
             </p>
 
-            <div className="mt-10 flex items-center gap-6">
-              <button
-                onClick={() => setOpenMenu(true)}
-                className="px-10 py-4 rounded-full bg-white text-primary text-xs font-bold uppercase tracking-widest transition-transform duration-300 hover:scale-105 active:scale-95 shadow-xl"
-              >
-                View Menu
-              </button>
-            </div>
+            <motion.div
+              variants={fadeUp}
+              className="mt-10 flex items-center gap-4"
+            >
+              <Button variant="secondary" onClick={() => setOpenMenu(true)}>
+                Explore Our Authentic Menu
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* VISUALS */}
@@ -134,8 +133,6 @@ export default function FeastOfFlavours() {
           </div>
         </div>
       </section>
-
-      <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
     </>
   );
 }
