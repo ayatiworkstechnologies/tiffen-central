@@ -41,7 +41,7 @@ export default function FeastOfFlavours() {
     <>
       <section
         ref={sectionRef}
-        className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#004d43] px-6 py-20 text-white"
+        className="relative flex min-h-screen items-center justify-center overflow-hidden bg-primary px-6 py-20 text-white"
       >
         {/* BACKGROUND LAYERS */}
         <div className="absolute inset-0 pointer-events-none select-none">
@@ -88,7 +88,7 @@ export default function FeastOfFlavours() {
             <div className="mt-10 flex items-center gap-6">
               <button
                 onClick={() => setOpenMenu(true)}
-                className="px-10 py-4 rounded-full bg-white text-[#004d43] text-xs font-bold uppercase tracking-widest transition-transform hover:scale-105 active:scale-95 shadow-xl"
+                className="px-10 py-4 rounded-full bg-white text-primary text-xs font-bold uppercase tracking-widest transition-transform duration-300 hover:scale-105 active:scale-95 shadow-xl"
               >
                 View Menu
               </button>

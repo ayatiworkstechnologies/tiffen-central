@@ -29,7 +29,7 @@ const inputClasses =
 
 export default function ContactUs() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f5f1ea] px-5 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:px-16 lg:py-20">
+    <section className="relative w-full overflow-hidden bg-background px-5 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:px-16 lg:py-20">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -58,7 +58,7 @@ export default function ContactUs() {
           {/* Left panel */}
           <motion.div
             variants={fadeUp}
-            className="relative overflow-hidden rounded-[24px] border border-[#e3ddd2] bg-white/60 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.03)] backdrop-blur-sm sm:p-7 md:p-8 lg:p-9"
+            className="relative overflow-hidden rounded-[24px] border border-primary/10 bg-white/60 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.03)] backdrop-blur-sm sm:p-7 md:p-8 lg:p-9"
           >
             <div className="relative z-10 h-full">
               <h3 className="font-serif text-[22px] leading-[1.2] tracking-[0.01em] text-primary sm:text-[26px]">
@@ -139,7 +139,7 @@ export default function ContactUs() {
 
                 <Field label="Subject">
                   <select
-                    className={`${inputClasses} appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%230f3d33%22%3E%3Cpath%20d%3D%22M5.22%208.22a.75.75%200%200%201%201.06%200L10%2011.94l3.72-3.72a.75.75%200%201%201%201.06%201.06l-4.25%204.25a.75.75%200%200%201-1.06%200L5.22%209.28a.75.75%200%200%201%200-1.06Z%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_14px_center] bg-no-repeat`}
+                    className={`${inputClasses} appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23004f34%22%3E%3Cpath%20d%3D%22M5.22%208.22a.75.75%200%200%201%201.06%200L10%2011.94l3.72-3.72a.75.75%200%201%201%201.06%201.06l-4.25%204.25a.75.75%200%200%201-1.06%200L5.22%209.28a.75.75%200%200%201%200-1.06Z%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_14px_center] bg-no-repeat`}
                   >
                     <option>General Inquiry</option>
                     <option>Table Reservation</option>
@@ -177,8 +177,8 @@ export default function ContactUs() {
 
 function ContactItem({ icon, title, content }) {
   return (
-    <div className="group flex items-start gap-4 rounded-[20px] border border-[#e3ddd2]/70 bg-white/70 p-4 transition-all duration-500 hover:border-[#8bb9a8]/40 hover:bg-white/85 hover:shadow-[0_12px_24px_rgba(3,40,24,0.04)] sm:p-5">
-      <div className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-primary/10 bg-[#f5f1ea] text-[20px] text-primary transition-all duration-500 group-hover:bg-primary group-hover:text-white">
+    <div className="group flex items-start gap-4 rounded-[20px] border border-primary/5 bg-white/70 p-4 transition-all duration-500 hover:border-primary/20 hover:bg-white/85 hover:shadow-[0_12px_24px_rgba(3,40,24,0.04)] sm:p-5">
+      <div className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-primary/10 bg-background text-[20px] text-primary transition-all duration-500 group-hover:bg-primary group-hover:text-white">
         {icon}
       </div>
 

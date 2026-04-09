@@ -84,11 +84,11 @@ export default function WelcomeSectionPremium() {
     >
       <div className="grid w-full md:grid-cols-[55%_45%]">
         {/* LEFT PANEL */}
-        <div className="relative z-10 flex min-h-[500px] items-center justify-center overflow-hidden bg-[#004d43] sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
+        <div className="relative z-10 flex min-h-[500px] items-center justify-center overflow-hidden bg-primary sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
           {/* Soft Glow */}
           <motion.div
             style={{ y: glowY, opacity: glowOpacity }}
-            className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-200/10 blur-3xl"
+            className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-100/10 blur-3xl"
           />
 
           {/* Pattern Background */}
@@ -137,10 +137,10 @@ export default function WelcomeSectionPremium() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="relative z-30 flex items-center overflow-hidden bg-[#f9f9f7] px-8 py-16 sm:px-12 md:px-16 lg:px-20">
+        <div className="relative z-30 flex items-center overflow-hidden bg-background px-8 py-16 sm:px-12 md:px-16 lg:px-20">
           {/* subtle background texture */}
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,77,67,0.03),transparent_35%,rgba(0,77,67,0.04))]" />
-          <div className="absolute right-[-80px] top-[-80px] h-[220px] w-[220px] rounded-full bg-[#004d43]/5 blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--color-primary)/0.03,transparent_35%,var(--color-primary)/0.04)]" />
+          <div className="absolute right-[-80px] top-[-80px] h-[220px] w-[220px] rounded-full bg-primary/5 blur-3xl" />
 
           <motion.div
             style={{ opacity: contentOpacity, y: contentY }}
@@ -155,14 +155,14 @@ export default function WelcomeSectionPremium() {
             >
               <motion.p
                 variants={fadeUp}
-                className="mb-4 text-[12px] font-bold uppercase tracking-[0.35em] text-[#004d43]/55"
+                className="mb-4 text-[12px] font-bold uppercase tracking-[0.35em] text-primary/55"
               >
                 Our Legacy
               </motion.p>
 
               <motion.h2
                 variants={fadeUp}
-                className="font-serif text-[34px] uppercase leading-[1.05] tracking-[0.06em] text-[#004d43] sm:text-[42px] md:text-[46px] lg:text-[52px]"
+                className="font-serif text-[34px] uppercase leading-[1.05] tracking-[0.06em] text-primary sm:text-[42px] md:text-[46px] lg:text-[52px]"
               >
                 Welcome to <br />
                 <span className="opacity-80">Tiffen Central</span>
@@ -170,7 +170,7 @@ export default function WelcomeSectionPremium() {
 
               <motion.div
                 variants={fadeUp}
-                className="mt-7 h-[2px] w-20 bg-[#004d43]/20"
+                className="mt-7 h-[2px] w-20 bg-primary/20"
               />
 
               <motion.p
@@ -189,7 +189,7 @@ export default function WelcomeSectionPremium() {
                 variants={fadeUp}
                 className="mt-10 flex items-center gap-4"
               >
-                <button className="group relative overflow-hidden rounded-full bg-[#004d43] px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(0,77,67,0.22)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(0,77,67,0.28)]">
+                <button className="group relative overflow-hidden rounded-full bg-primary px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(3,40,24,0.14)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(3,40,24,0.22)]">
                   <span className="absolute inset-0 translate-y-full bg-white/10 transition-transform duration-500 group-hover:translate-y-0" />
                   <span className="relative z-10">
                     Explore Our Authentic Menu

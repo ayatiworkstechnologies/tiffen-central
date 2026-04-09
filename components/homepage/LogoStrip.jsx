@@ -1,11 +1,22 @@
 "use client";
-import Image from "next/image";
 
 import React from "react";
 import { motion } from "framer-motion";
 
 export default function LogoStrip() {
-  const logos = Array(20).fill("/vector-logo.svg");
+  const trendingFoods = [
+    "Classic Masala Dosa",
+    "Steamed Soft Idli",
+    "Crispy Medu Vada",
+    "Ghee Ven Pongal",
+    "Filter Kaapi",
+    "Mysore Masala",
+    "Onion Rava Dosa",
+    "Podi Idli",
+  ];
+
+  // Create enough copies for a smooth infinite scroll
+  const marqueeItems = [...trendingFoods, ...trendingFoods, ...trendingFoods, ...trendingFoods];
 
   return (
     <motion.section 
@@ -13,22 +24,22 @@ export default function LogoStrip() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full overflow-hidden bg-white py-3"
+      className="w-full overflow-hidden border-y border-primary/10 bg-background py-4"
     >
-      <div className="flex w-max animate-marquee items-center gap-3">
-        {[...logos, ...logos].map((logo, index) => (
-          <Image unoptimized width={800} height={800} 
-            key={index}
-            src={logo}
-            alt="Flower Logo"
-            className="h-10 w-10 object-contain sm:h-12 sm:w-12 md:h-14 md:w-14"
-          />
+      <div className="flex w-max animate-marquee items-center gap-8 md:gap-12">
+        {marqueeItems.map((food, index) => (
+          <div key={index} className="flex items-center gap-8 md:gap-12">
+            <span className="whitespace-nowrap font-sans text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              {food}
+            </span>
+            <span className="text-primary/30 text-xs">✦</span>
+          </div>
         ))}
       </div>
 
       <style jsx>{`
         .animate-marquee {
-          animation: marquee 18s linear infinite;
+          animation: marquee 40s linear infinite;
         }
 
         @keyframes marquee {

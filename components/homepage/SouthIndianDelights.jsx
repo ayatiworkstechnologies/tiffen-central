@@ -48,7 +48,7 @@ export default function SouthIndianDelights() {
       </div>
 
       {/* Light Overlay */}
-      <div className="absolute inset-0 z-[5] bg-[#f5f1ea]/80" />
+      <div className="absolute inset-0 z-[5] bg-background/90" />
 
       {/* Texture Overlay */}
       <div
@@ -85,10 +85,10 @@ export default function SouthIndianDelights() {
       >
         {/* Heading */}
         <motion.div variants={fadeUp} className="mb-10 text-center">
-          <h2 className="font-serif text-[24px] uppercase tracking-[0.06em] text-primary sm:text-[28px] md:text-[32px]">
+          <h2 className="font-serif text-[28px] uppercase tracking-[0.06em] text-primary sm:text-[32px] md:text-[38px] lg:text-[46px]">
             Authentic South Indian Delights
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-[11px] leading-6 text-[#7a7a7a] sm:text-xs">
+          <p className="mx-auto mt-4 max-w-2xl text-[12px] leading-relaxed text-primary/60 sm:text-sm">
             Experience the rich, aromatic tradition of our South Indian
             favorites. Every dish is crafted with love, using heirloom recipes
             and premium ingredients to deliver extraordinary flavor in every
@@ -288,7 +288,7 @@ export default function SouthIndianDelights() {
                 <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
                   Zesty Lemon Rice
                 </h3>
-                <p className="mt-2 text-[12px] leading-5 text-[#6f6f6f]">
+                <p className="mt-2 text-[12px] leading-5 text-primary/60">
                   Tangy, vibrant, fragrant, light, homely, refreshing.
                 </p>
               </div>

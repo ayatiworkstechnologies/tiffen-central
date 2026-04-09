@@ -95,7 +95,7 @@ export default function TiffenHeroHotspot() {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#e9e4dd]">
+    <section className="relative w-full overflow-hidden bg-background">
       <div className="relative mx-auto h-[320px] w-full max-w-[1920px] sm:h-[420px] md:h-[520px] lg:h-[640px] xl:h-[760px]">
         {/* Background image */}
         <motion.div
@@ -129,7 +129,7 @@ export default function TiffenHeroHotspot() {
           <p className="mb-2 text-[10px] uppercase tracking-[0.32em] text-white/70 sm:text-[11px]">
             Signature Experience
           </p>
-          <h2 className="font-serif text-[16px] uppercase tracking-[0.18em] text-white sm:text-[20px] md:text-[24px] lg:text-[28px]">
+          <h2 className="font-serif text-[18px] uppercase tracking-[0.18em] text-white sm:text-[22px] md:text-[26px] lg:text-[32px]">
             Crafted to Satisfy
           </h2>
         </motion.div>
