@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import OfferTexture from "../ui/OfferTexture";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -35,20 +36,9 @@ const flowerRow = [...Array(8)];
 export default function SouthIndianDelights() {
   return (
     <section className="relative w-full overflow-hidden px-4 py-10 md:px-8 lg:px-12">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          unoptimized
-          src="/offer.svg"
-          alt="Background"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
-
-      {/* Light Overlay */}
-      <div className="absolute inset-0 z-[5] bg-background/90" />
+      <OfferTexture className="opacity-[0.10]" />
+      {/* Light overlay */}
+      <div className="absolute inset-0 z-[5] bg-background/92" />
 
       {/* Texture Overlay */}
       <div

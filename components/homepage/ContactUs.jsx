@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail, FiSend } from "react-icons/fi";
 import Button from "../ui/Button";
+import { DATA } from "@/content/data";
+import OfferTexture from "../ui/OfferTexture";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -29,8 +31,11 @@ const inputClasses =
   "w-full rounded-[18px] border border-[#032818]/[0.12] bg-white/60 px-4 py-3 text-[14px] leading-[1.5] text-[#0f3d33] transition-all duration-300 placeholder:text-[#8a877f] focus:border-[#032818]/[0.24] focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#8bb9a8]/[0.10]";
 
 export default function ContactUs() {
+  const site = DATA.site;
+  const contact = DATA.sections.contact;
   return (
     <section className="relative w-full overflow-hidden bg-background px-5 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:px-16 lg:py-20">
+      <OfferTexture className="opacity-[0.09]" />
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -44,14 +49,14 @@ export default function ContactUs() {
             variants={fadeUp}
             className="mb-2 text-[11px] uppercase tracking-[0.28em] text-primary/65 sm:text-xs"
           >
-            Get In Touch
+            {contact.eyebrow}
           </motion.p>
 
           <motion.h2
             variants={fadeUp}
             className="font-serif text-[28px] uppercase tracking-[0.04em] text-primary sm:text-[34px] md:text-[42px]"
           >
-            Contact Us
+            {contact.title}
           </motion.h2>
         </div>
 
@@ -63,13 +68,11 @@ export default function ContactUs() {
           >
             <div className="relative z-10 h-full">
               <h3 className="font-serif text-[22px] leading-[1.2] tracking-[0.01em] text-primary sm:text-[26px]">
-                We would love to hear from you.
+                {contact.leftTitle}
               </h3>
 
               <p className="mt-4 max-w-xl text-[14px] leading-6 text-[#6d6d6d] sm:text-[15px]">
-                Whether you have a question about our menu, want to book a
-                private event, or simply wish to share your dining experience,
-                our team is ready to assist you.
+                {contact.leftBody}
               </p>
 
               <div className="mt-8 space-y-4">
@@ -78,9 +81,14 @@ export default function ContactUs() {
                   title="Location"
                   content={
                     <>
-                      123 Culinary Avenue, Food District
+                      {site.contact.addressLines.map((line) => (
+                        <React.Fragment key={line}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
                       <br />
-                      FC 90210
+                      {site.contact.cityRegion}
                     </>
                   }
                 />
@@ -90,9 +98,9 @@ export default function ContactUs() {
                   title="Reservations"
                   content={
                     <>
-                      +1 (555) 123-4567
+                      {site.contact.phone}
                       <br />
-                      reservations@tiffencentral.com
+                      {site.contact.email}
                     </>
                   }
                 />
@@ -100,7 +108,7 @@ export default function ContactUs() {
                 <ContactItem
                   icon={<FiMail />}
                   title="General Enquiries"
-                  content={<>hello@tiffencentral.com</>}
+                  content={<>{site.contact.email}</>}
                 />
               </div>
             </div>
@@ -135,6 +143,18 @@ export default function ContactUs() {
                     type="email"
                     className={inputClasses}
                     placeholder="Enter email address"
+                  />
+                </Field>
+
+                <Field label="Mobile Number">
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    className={inputClasses}
+                    placeholder="Enter mobile number"
+                    pattern="^[0-9+()\\-\\s]{7,20}$"
+                    required
                   />
                 </Field>
 

@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${kavo.variable} ${sora.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-secondary text-primary bg-background">
+      <body className="min-h-full flex flex-col font-secondary text-foreground bg-background">
         <Header />
         {children}
         <Footer />

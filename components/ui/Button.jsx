@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
 
-/* ── Fill color per variant (the liquid that rises) ── */
+// Fill color per variant (the liquid that rises)
 const fillColors = {
   primary: "bg-white",
   secondary: "bg-primary",
@@ -12,7 +12,7 @@ const fillColors = {
   ghost: "bg-primary",
 };
 
-/* ── Text color AFTER fill (inverted) ── */
+// Text color after fill (inverted)
 const fillTextColors = {
   primary: "group-hover:text-primary",
   secondary: "group-hover:text-white",
@@ -21,17 +21,15 @@ const fillTextColors = {
   ghost: "group-hover:text-white",
 };
 
-/* ── Base appearance per variant ── */
+// Base appearance per variant
 const baseStyles = {
   primary:
-    "bg-primary text-white shadow-[0_12px_30px_rgba(0,79,52,0.15)] hover:shadow-[0_20px_40px_rgba(0,79,52,0.25)]",
+    "bg-primary text-white shadow-[0_14px_34px_rgba(0,79,52,0.18)] hover:shadow-[0_22px_46px_rgba(0,79,52,0.28)]",
   secondary:
-    "bg-white text-primary shadow-[0_12px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]",
-  outline:
-    "border-[1.5px] border-primary/20 text-primary hover:border-primary/60",
-  light:
-    "border-[1.5px] border-white/30 text-white hover:border-white/60",
-  ghost: "text-primary/70 hover:text-primary",
+    "bg-surface text-primary shadow-[0_14px_34px_rgba(0,0,0,0.06)] hover:shadow-[0_22px_46px_rgba(0,0,0,0.12)]",
+  outline: "border-[1.5px] border-primary/25 text-primary hover:border-primary/70",
+  light: "border-[1.5px] border-white/30 text-white hover:border-white/60",
+  ghost: "text-primary/70 hover:text-primary hover:bg-primary/5",
 };
 
 export default function Button({
@@ -60,7 +58,6 @@ export default function Button({
       `}
       {...props}
     >
-      {/* Text layer */}
       <span
         className={`relative z-10 transition-colors duration-500 ${
           fillTextColors[variant] || fillTextColors.primary
@@ -69,8 +66,8 @@ export default function Button({
         {children}
       </span>
 
-      {/* Fill layer — simple bottom-to-top on hover */}
       <span
+        aria-hidden="true"
         className={`
           absolute inset-0 z-0
           translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]

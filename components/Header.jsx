@@ -4,19 +4,60 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { DATA } from "@/content/data";
 
 export default function Header() {
+  const site = DATA.site;
+  const header = DATA.header;
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeHash, setActiveHash] = useState("#home");
 
-  // Track scroll for header shrink
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when menu is open
+  useEffect(() => {
+    const ids = [
+      "home",
+      "about",
+      "feast",
+      "delights",
+      "catering",
+      "signature",
+      "contact",
+    ];
+
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort(
+            (a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0),
+          );
+
+        if (visible[0]?.target?.id) {
+          setActiveHash(`#${visible[0].target.id}`);
+        }
+      },
+      {
+        threshold: [0.12, 0.2, 0.35, 0.5],
+        rootMargin: "-20% 0px -70% 0px",
+      },
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -28,16 +69,16 @@ export default function Header() {
     };
   }, [isOpen]);
 
-  const navLinks = [
-    { title: "Home", href: "#home" },
-    { title: "Our Story", href: "#about" },
-    { title: "Feast of Flavours", href: "#feast" },
-    { title: "South Indian Delights", href: "#delights" },
-    { title: "Signature Experience", href: "#signature" },
-    { title: "Contact Us", href: "#contact" },
-  ];
+  const navLinks = header.drawerLinks;
+  const desktopLinks = header.desktopLinks;
 
-  /* ── Animation Variants ── */
+  const socialLinks = [
+    { label: "Instagram", href: site.socials.instagram },
+    { label: "Facebook", href: site.socials.facebook },
+    { label: "X", href: site.socials.x },
+  ].filter((l) => Boolean(l.href));
+
+  /* Animation variants */
   const menuVariants = {
     closed: {
       x: "100%",
@@ -78,25 +119,50 @@ export default function Header() {
 
   return (
     <>
-      {/* ═══════ HEADER BAR ═══════ */}
+      {/* Header bar */}
       <motion.header
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         className={`fixed left-0 top-0 z-[100] w-full transition-all duration-500 ${
           scrolled
-            ? "border-b border-primary/5 bg-white/90 shadow-[0_4px_30px_rgba(0,0,0,0.04)] backdrop-blur-xl"
-            : "bg-white"
+            ? "border-b border-primary/10 bg-white shadow-[0_2px_28px_rgba(0,0,0,0.07)] backdrop-blur-2xl"
+            : "bg-transparent"
         }`}
       >
         <div className="mx-auto max-w-[1920px] px-6 sm:px-8 lg:px-12">
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
-              scrolled ? "h-16 sm:h-[72px]" : "h-20 sm:h-24"
+              scrolled ? "h-16 sm:h-[68px]" : "h-20 sm:h-24"
             }`}
           >
-            {/* Left — empty spacer to keep the logo centered */}
-            <div className="w-10 shrink-0 md:w-16" />
+            {/* Left — Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {desktopLinks.slice(0, 3).map((link) => {
+                const isActive = activeHash === link.href;
+                return (
+                  <Link
+                    key={link.title}
+                    href={link.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] rounded-full transition-all duration-300 ${
+                      scrolled
+                        ? isActive
+                          ? "text-primary bg-primary/6"
+                          : "text-primary/70 hover:text-primary hover:bg-primary/5"
+                        : isActive
+                          ? "text-white bg-white/12"
+                          : "text-white/70 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {link.title}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Left spacer on mobile */}
+            <div className="w-10 shrink-0 lg:hidden" />
 
             {/* Centre — Logo */}
             <Link
@@ -107,48 +173,83 @@ export default function Header() {
                 unoptimized
                 width={800}
                 height={800}
-                src="/logo.png"
-                alt="Tiffen Central"
+                src={site.images.logo}
+                alt={site.brand.name}
                 className={`h-auto w-auto object-contain transition-all duration-500 ${
                   scrolled
                     ? "max-h-10 sm:max-h-12"
-                    : "max-h-14 sm:max-h-[72px]"
+                    : "max-h-14 sm:max-h-[72px] brightness-0 invert"
                 }`}
               />
             </Link>
 
-            {/* Right — Hamburger toggle */}
-            <button
-              aria-label="Open navigation"
-              onClick={() => setIsOpen(true)}
-              className="group relative flex h-10 w-10 shrink-0 flex-col items-end justify-center gap-[5px] rounded-full p-1.5 transition-all duration-300 hover:bg-primary/5 md:h-12 md:w-12"
-            >
-              <motion.span
-                animate={
-                  isOpen
-                    ? { rotate: 45, y: 7, width: "100%" }
-                    : { rotate: 0, y: 0, width: "100%" }
-                }
-                className="block h-[1.5px] w-full origin-center rounded-full bg-primary transition-all"
-              />
-              <motion.span
-                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                className="block h-[1.5px] w-[70%] origin-center rounded-full bg-primary/80"
-              />
-              <motion.span
-                animate={
-                  isOpen
-                    ? { rotate: -45, y: -7, width: "100%" }
-                    : { rotate: 0, y: 0, width: "50%" }
-                }
-                className="block h-[1.5px] w-[50%] origin-center rounded-full bg-primary/60 transition-all group-hover:w-full"
-              />
-            </button>
+            {/* Right — Desktop Navigation + Hamburger */}
+            <div className="flex items-center gap-1">
+              <nav className="hidden lg:flex items-center gap-1">
+                {desktopLinks.slice(3).map((link) => {
+                  const isActive = activeHash === link.href;
+                  return (
+                    <Link
+                      key={link.title}
+                      href={link.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] rounded-full transition-all duration-300 ${
+                        scrolled
+                          ? isActive
+                            ? "text-primary bg-primary/6"
+                            : "text-primary/70 hover:text-primary hover:bg-primary/5"
+                          : isActive
+                            ? "text-white bg-white/12"
+                            : "text-white/70 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {link.title}
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              {/* Hamburger toggle */}
+              <button
+                aria-label="Open navigation"
+                onClick={() => setIsOpen(true)}
+                className={`group relative flex h-10 w-10 shrink-0 flex-col items-end justify-center gap-[5px] rounded-full p-1.5 transition-all duration-300 md:h-11 md:w-11 ${
+                  scrolled ? "hover:bg-primary/5" : "hover:bg-white/10"
+                }`}
+              >
+                <motion.span
+                  animate={
+                    isOpen
+                      ? { rotate: 45, y: 7, width: "100%" }
+                      : { rotate: 0, y: 0, width: "100%" }
+                  }
+                  className={`block h-[1.5px] w-full origin-center rounded-full transition-all ${
+                    scrolled ? "bg-primary" : "bg-white"
+                  }`}
+                />
+                <motion.span
+                  animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                  className={`block h-[1.5px] w-[70%] origin-center rounded-full ${
+                    scrolled ? "bg-primary/80" : "bg-white/80"
+                  }`}
+                />
+                <motion.span
+                  animate={
+                    isOpen
+                      ? { rotate: -45, y: -7, width: "100%" }
+                      : { rotate: 0, y: 0, width: "50%" }
+                  }
+                  className={`block h-[1.5px] w-[50%] origin-center rounded-full transition-all group-hover:w-full ${
+                    scrolled ? "bg-primary/60" : "bg-white/60"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>
 
-      {/* ═══════ NAVIGATION OVERLAY ═══════ */}
+      {/* Navigation overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -179,8 +280,8 @@ export default function Header() {
                   unoptimized
                   width={200}
                   height={200}
-                  src="/logo.png"
-                  alt="Tiffen Central"
+                  src={site.images.logo}
+                  alt={site.brand.name}
                   className="h-8 w-auto object-contain brightness-0 invert sm:h-10"
                 />
 
@@ -213,47 +314,57 @@ export default function Header() {
                 </p>
 
                 <ul className="flex flex-col gap-1">
-                  {navLinks.map((link, i) => (
-                    <motion.li
-                      key={link.title}
-                      custom={i}
-                      variants={linkVariant}
-                      initial="closed"
-                      animate="open"
-                      exit="closed"
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className="group flex items-center gap-4 rounded-xl px-3 py-3 transition-all duration-300 hover:bg-white/5"
+                  {navLinks.map((link, i) => {
+                    const isActive = activeHash === link.href;
+                    return (
+                      <motion.li
+                        key={link.title}
+                        custom={i}
+                        variants={linkVariant}
+                        initial="closed"
+                        animate="open"
+                        exit="closed"
                       >
-                        {/* Number accent */}
-                        <span className="text-[11px] tabular-nums tracking-wider text-white/20 transition-colors group-hover:text-white/40">
-                          0{i + 1}
-                        </span>
-
-                        {/* Title */}
-                        <span className="font-serif text-xl tracking-wide text-white transition-all group-hover:translate-x-1 sm:text-2xl">
-                          {link.title}
-                        </span>
-
-                        {/* Arrow */}
-                        <svg
-                          className="ml-auto h-4 w-4 text-white/0 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white/40"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                        <Link
+                          href={link.href}
+                          aria-current={isActive ? "page" : undefined}
+                          onClick={() => setIsOpen(false)}
+                          className={`group flex items-center gap-4 rounded-xl px-3 py-3 transition-all duration-300 ${
+                            isActive ? "bg-white/8" : "hover:bg-white/5"
+                          }`}
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M9 5l7 7-7 7"
+                          <span
+                            aria-hidden="true"
+                            className={`h-7 w-1.5 rounded-full ${
+                              isActive ? "bg-accent/80" : "bg-white/0"
+                            }`}
                           />
-                        </svg>
-                      </Link>
-                    </motion.li>
-                  ))}
+
+                          <span className="text-[11px] tabular-nums tracking-wider text-white/20 transition-colors group-hover:text-white/40">
+                            0{i + 1}
+                          </span>
+
+                          <span className="font-serif text-xl tracking-wide text-white transition-all group-hover:translate-x-1 sm:text-2xl">
+                            {link.title}
+                          </span>
+
+                          <svg
+                            className="ml-auto h-4 w-4 text-white/0 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white/40"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      </motion.li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -268,17 +379,25 @@ export default function Header() {
                 <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.45em] text-white/25">
                   Follow Us
                 </p>
-                <div className="flex gap-5">
-                  {["Instagram", "Facebook", "Twitter"].map((s) => (
-                    <a
-                      key={s}
-                      href="#"
-                      className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
-                    >
-                      {s}
-                    </a>
-                  ))}
-                </div>
+                {socialLinks.length > 0 ? (
+                  <div className="flex flex-wrap gap-5">
+                    {socialLinks.map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
+                    Social links will be added.
+                  </p>
+                )}
               </motion.div>
             </motion.nav>
           </>

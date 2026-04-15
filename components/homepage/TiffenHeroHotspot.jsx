@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import OfferTexture from "../ui/OfferTexture";
 
 const dishes = [
   {
@@ -96,6 +97,7 @@ export default function TiffenHeroHotspot() {
 
   return (
     <section className="relative w-full overflow-hidden bg-background">
+      <OfferTexture className="opacity-[0.08]" />
       <div className="relative mx-auto h-[320px] w-full max-w-[1920px] sm:h-[420px] md:h-[520px] lg:h-[640px] xl:h-[760px]">
         {/* Background image */}
         <motion.div

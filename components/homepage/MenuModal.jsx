@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { DATA } from "@/content/data";
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -13,69 +14,10 @@ const scaleIn = {
   },
 };
 
-const breakfastItems = [
-  "Idli (2)",
-  "Vada",
-  "Sambar Combo",
-  "Ghee Idli",
-  "Pongal",
-  "Poori",
-];
-
-const dosaItems = [
-  "Plain Dosa",
-  "Masala Dosa",
-  "Ghee Roast Dosa",
-  "Onion Dosa",
-  "Podi Masala",
-  "Rava Roast",
-  "Onion Uthappam",
-  "Rava Uthappam",
-  "Butter Masala",
-];
-
-const riceItems = [
-  "Sambar Rice",
-  "Curd Rice",
-  "Puliogare",
-  "Lemon Rice",
-  "Tomato Rice",
-];
-
-const snacksItems = [
-  "Bonda",
-  "Bajji",
-  "Samosa",
-  "Cutlet",
-  "Popcorn Foods",
-  "Cookies",
-];
-
-const beveragesItems = [
-  "Filter Coffee",
-  "Black Coffee",
-  "Tea",
-  "Boost",
-  "Horlicks",
-  "Lemon Tea",
-  "Badam Milk",
-  "Milk",
-];
-
-const coldItems = [
-  "Fresh Juices",
-  "Milkshakes",
-  "Lassi",
-  "Falooda",
-  "Cold Coffee",
-  "Oreo Milkshake",
-];
-
-const sweetsItems = [
-  "Kesari",
-  "Badam Halwa",
-  "Tender Coconut Pudding",
-  "Filter Coffee Cake",
+const columnGroups = [
+  DATA.menu.categories.slice(0, 2),
+  DATA.menu.categories.slice(2, 5),
+  DATA.menu.categories.slice(5),
 ];
 
 function MenuBlock({ title, items, className = "" }) {
@@ -177,95 +119,47 @@ export default function MenuModal({ open, onClose }) {
 
               <div className="mb-8 text-center">
                 <h2 className="font-serif text-[22px] font-semibold text-white sm:text-[26px]">
-                  Flavours of South India
+                  {DATA.menu.modalTitle}
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1fr]">
-                <div className="flex h-full flex-col justify-between gap-4">
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-2.png"
-                      alt="Breakfast Specials"
-                      className="h-[145px]"
-                    />
-                    <MenuBlock
-                      title="Breakfast Specials"
-                      items={breakfastItems}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-1.png"
-                      alt="Dosa Varieties"
-                      className="h-[255px]"
-                    />
-                    <MenuBlock title="Dosa Varieties" items={dosaItems} />
-                  </div>
-                </div>
+                {columnGroups.map((group, groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    className="flex h-full flex-col justify-between gap-4"
+                  >
+                    {group.map((category) => (
+                      <div key={category.title} className="flex flex-col gap-4">
+                        <MenuImage
+                          src={category.image}
+                          alt={category.imageAlt}
+                          className={category.imageClassName || ""}
+                        />
+                        <MenuBlock title={category.title} items={category.items} />
+                      </div>
+                    ))}
 
-                <div className="flex h-full flex-col justify-between gap-4">
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-7.png"
-                      alt="Rice Varieties"
-                      className="h-[110px]"
-                    />
-                    <MenuBlock title="Rice Varieties" items={riceItems} />
+                    {groupIndex === 2 && (
+                      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 px-6 py-10 text-center shadow-sm backdrop-blur-sm">
+                        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent)]" />
+                        <Image
+                          unoptimized
+                          width={400}
+                          height={400}
+                          src={DATA.site.images.logo}
+                          alt={`${DATA.site.brand.name} Logo`}
+                          className="relative z-10 h-auto w-full max-w-[180px] object-contain opacity-100 brightness-0 invert filter"
+                        />
+                        <p className="relative z-10 mt-5 text-[12px] uppercase leading-snug tracking-widest text-white/80">
+                          South Indian Classics
+                          <br />
+                          Made Fresh Daily
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-6.png"
-                      alt="Snacks"
-                      className="h-[120px]"
-                    />
-                    <MenuBlock title="Snacks" items={snacksItems} />
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-5.png"
-                      alt="Sweets"
-                      className="h-[100px]"
-                    />
-                    <MenuBlock title="Sweets" items={sweetsItems} />
-                  </div>
-                </div>
-
-                <div className="flex h-full flex-col justify-between gap-4">
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-4.png"
-                      alt="Hot Beverages"
-                      className="h-[145px]"
-                    />
-                    <MenuBlock title="Hot Beverages" items={beveragesItems} />
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <MenuImage
-                      src="/menu-3.png"
-                      alt="Cold Beverages"
-                      className="h-[100px]"
-                    />
-                    <MenuBlock title="Cold Beverages" items={coldItems} />
-                  </div>
-
-                  <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 px-6 py-10 text-center shadow-sm backdrop-blur-sm">
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent)]" />
-                    <Image
-                      unoptimized
-                      width={400}
-                      height={400}
-                      src="/logo.png"
-                      alt="Tiffen Central Logo"
-                      className="relative z-10 h-auto w-full max-w-[180px] object-contain opacity-100 brightness-0 invert filter"
-                    />
-                    <p className="relative z-10 mt-5 text-[12px] uppercase leading-snug tracking-widest text-white/80">
-                      South Indian Classics
-                      <br />
-                      Made Fresh Daily
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </motion.div>
           </div>

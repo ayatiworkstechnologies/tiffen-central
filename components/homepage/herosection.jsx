@@ -121,7 +121,7 @@ export default function HeroZoomPoster() {
               The Future of Motion
             </p>
 
-            <h1 className="max-w-5xl text-5xl font-bold tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl">
+            <h1 className="max-w-5xl text-5xl font-bold tracking-tighter text-white sm:text-6xl md:text-7xl lg:text-8xl">
               Tiffen<span className="text-primary/70">Central</span>
             </h1>
 
