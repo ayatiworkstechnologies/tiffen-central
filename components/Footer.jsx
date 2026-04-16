@@ -3,7 +3,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiInstagram, FiFacebook, FiTwitter } from "react-icons/fi";
+import { FiInstagram, FiFacebook } from "react-icons/fi";
+import { RiTwitterXLine } from "react-icons/ri";
 import { DATA } from "@/content/data";
 
 const fadeUp = {
@@ -29,7 +30,7 @@ export default function Footer() {
   const socials = [
     { label: "Instagram", href: site.socials.instagram, Icon: FiInstagram },
     { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
-    { label: "X", href: site.socials.x, Icon: FiTwitter },
+    { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
   ];
 
   return (

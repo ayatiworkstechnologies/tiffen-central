@@ -35,7 +35,7 @@ const flowerRow = [...Array(8)];
 
 export default function SouthIndianDelights() {
   return (
-    <section className="relative w-full overflow-hidden px-4 py-10 md:px-8 lg:px-12">
+    <section className="relative w-full overflow-hidden py-10">
       <OfferTexture className="opacity-[0.10]" />
       {/* Light overlay */}
       <div className="absolute inset-0 z-[5] bg-background/92" />
@@ -67,7 +67,7 @@ export default function SouthIndianDelights() {
       </motion.div>
 
       <motion.div
-        className="relative z-20 mx-auto max-w-7xl"
+        className="tc-container relative z-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}

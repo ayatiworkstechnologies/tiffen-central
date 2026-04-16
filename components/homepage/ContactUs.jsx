@@ -34,14 +34,14 @@ export default function ContactUs() {
   const site = DATA.site;
   const contact = DATA.sections.contact;
   return (
-    <section className="relative w-full overflow-hidden bg-background px-5 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:px-16 lg:py-20">
+    <section className="relative w-full overflow-hidden bg-background py-12 sm:py-14 md:py-16 lg:py-20">
       <OfferTexture className="opacity-[0.09]" />
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="relative z-10 mx-auto max-w-7xl"
+        className="tc-container relative z-10"
       >
         {/* Heading */}
         <div className="text-center">

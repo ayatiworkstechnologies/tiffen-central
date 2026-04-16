@@ -3,20 +3,36 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/content/data";
 
 export default function Header() {
   const site = DATA.site;
   const header = DATA.header;
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
+  const isHomePage = pathname === "/";
+  const useTransparentHeader = isHomePage && !scrolled;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const syncHash = () => {
+      if (window.location.hash) {
+        setActiveHash(window.location.hash);
+      }
+    };
+
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
   }, []);
 
   useEffect(() => {
@@ -125,12 +141,12 @@ export default function Header() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         className={`fixed left-0 top-0 z-[100] w-full transition-all duration-500 ${
-          scrolled
-            ? "border-b border-primary/10 bg-white shadow-[0_2px_28px_rgba(0,0,0,0.07)] backdrop-blur-2xl"
-            : "bg-transparent"
+          useTransparentHeader
+            ? "bg-transparent"
+            : "border-b border-primary/10 bg-white shadow-[0_2px_28px_rgba(0,0,0,0.07)] backdrop-blur-2xl"
         }`}
       >
-        <div className="mx-auto max-w-[1920px] px-6 sm:px-8 lg:px-12">
+        <div className="tc-container">
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
               scrolled ? "h-16 sm:h-[68px]" : "h-20 sm:h-24"
@@ -145,14 +161,15 @@ export default function Header() {
                     key={link.title}
                     href={link.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] rounded-full transition-all duration-300 ${
-                      scrolled
+                    onClick={() => setActiveHash(link.href)}
+                    className={`rounded-full px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] transition-all duration-300 ${
+                      useTransparentHeader
                         ? isActive
-                          ? "text-primary bg-primary/6"
-                          : "text-primary/70 hover:text-primary hover:bg-primary/5"
+                          ? "bg-white/16 text-white ring-1 ring-white/20"
+                          : "text-white/78 hover:bg-white/12 hover:text-white"
                         : isActive
-                          ? "text-white bg-white/12"
-                          : "text-white/70 hover:text-white hover:bg-white/10"
+                          ? "bg-primary/8 text-primary ring-1 ring-primary/10"
+                          : "text-primary/72 hover:bg-primary/5 hover:text-primary"
                     }`}
                   >
                     {link.title}
@@ -176,9 +193,9 @@ export default function Header() {
                 src={site.images.logo}
                 alt={site.brand.name}
                 className={`h-auto w-auto object-contain transition-all duration-500 ${
-                  scrolled
-                    ? "max-h-10 sm:max-h-12"
-                    : "max-h-14 sm:max-h-[72px] brightness-0 invert"
+                  useTransparentHeader
+                    ? "max-h-14 sm:max-h-[72px] brightness-0 invert"
+                    : "max-h-10 sm:max-h-12"
                 }`}
               />
             </Link>
@@ -193,14 +210,15 @@ export default function Header() {
                       key={link.title}
                       href={link.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] rounded-full transition-all duration-300 ${
-                        scrolled
+                      onClick={() => setActiveHash(link.href)}
+                      className={`rounded-full px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] transition-all duration-300 ${
+                        useTransparentHeader
                           ? isActive
-                            ? "text-primary bg-primary/6"
-                            : "text-primary/70 hover:text-primary hover:bg-primary/5"
+                            ? "bg-white/16 text-white ring-1 ring-white/20"
+                            : "text-white/78 hover:bg-white/12 hover:text-white"
                           : isActive
-                            ? "text-white bg-white/12"
-                            : "text-white/70 hover:text-white hover:bg-white/10"
+                            ? "bg-primary/8 text-primary ring-1 ring-primary/10"
+                            : "text-primary/72 hover:bg-primary/5 hover:text-primary"
                       }`}
                     >
                       {link.title}
@@ -213,8 +231,8 @@ export default function Header() {
               <button
                 aria-label="Open navigation"
                 onClick={() => setIsOpen(true)}
-                className={`group relative flex h-10 w-10 shrink-0 flex-col items-end justify-center gap-[5px] rounded-full p-1.5 transition-all duration-300 md:h-11 md:w-11 ${
-                  scrolled ? "hover:bg-primary/5" : "hover:bg-white/10"
+                className={`group relative flex h-10 w-10 shrink-0 flex-col items-end justify-center gap-[5px] rounded-full p-1.5 transition-all duration-300 md:h-11 md:w-11 lg:hidden ${
+                  useTransparentHeader ? "hover:bg-white/10" : "hover:bg-primary/5"
                 }`}
               >
                 <motion.span
@@ -224,13 +242,13 @@ export default function Header() {
                       : { rotate: 0, y: 0, width: "100%" }
                   }
                   className={`block h-[1.5px] w-full origin-center rounded-full transition-all ${
-                    scrolled ? "bg-primary" : "bg-white"
+                    useTransparentHeader ? "bg-white" : "bg-primary"
                   }`}
                 />
                 <motion.span
                   animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
                   className={`block h-[1.5px] w-[70%] origin-center rounded-full ${
-                    scrolled ? "bg-primary/80" : "bg-white/80"
+                    useTransparentHeader ? "bg-white/80" : "bg-primary/80"
                   }`}
                 />
                 <motion.span
@@ -240,7 +258,7 @@ export default function Header() {
                       : { rotate: 0, y: 0, width: "50%" }
                   }
                   className={`block h-[1.5px] w-[50%] origin-center rounded-full transition-all group-hover:w-full ${
-                    scrolled ? "bg-primary/60" : "bg-white/60"
+                    useTransparentHeader ? "bg-white/60" : "bg-primary/60"
                   }`}
                 />
               </button>
@@ -328,7 +346,10 @@ export default function Header() {
                         <Link
                           href={link.href}
                           aria-current={isActive ? "page" : undefined}
-                          onClick={() => setIsOpen(false)}
+                          onClick={() => {
+                            setActiveHash(link.href);
+                            setIsOpen(false);
+                          }}
                           className={`group flex items-center gap-4 rounded-xl px-3 py-3 transition-all duration-300 ${
                             isActive ? "bg-white/8" : "hover:bg-white/5"
                           }`}

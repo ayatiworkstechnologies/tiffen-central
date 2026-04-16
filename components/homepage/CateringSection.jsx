@@ -63,7 +63,7 @@ const features = [
 
 export default function CateringSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-primary px-5 py-16 sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-16 lg:py-28">
+    <section className="relative w-full overflow-hidden bg-primary py-16 sm:py-20 md:py-24 lg:py-28">
       {/* Background texture */}
       <div
         className="absolute inset-0 opacity-[0.04]"
@@ -83,7 +83,7 @@ export default function CateringSection() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.12 }}
         variants={staggerContainer}
-        className="relative z-10 mx-auto max-w-7xl"
+        className="tc-container relative z-10"
       >
         {/* Section Header */}
         <div className="text-center">

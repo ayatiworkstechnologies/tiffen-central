@@ -31,14 +31,14 @@ export const DATA = {
 
   header: {
     desktopLinks: [
-      { title: "Home", href: "#home" },
       { title: "About", href: "#about" },
-      { title: "Menu", href: "#feast" },
+      { title: "Flavours", href: "#feast" },
+      { title: "Delights", href: "#delights" },
       { title: "Catering", href: "#catering" },
+      { title: "Signature", href: "#signature" },
       { title: "Contact", href: "#contact" },
     ],
     drawerLinks: [
-      { title: "Home", href: "#home" },
       { title: "Our Story", href: "#about" },
       { title: "Feast of Flavours", href: "#feast" },
       { title: "South Indian Delights", href: "#delights" },
