@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { FiFacebook, FiInstagram } from "react-icons/fi";
+import { RiTwitterXLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/content/data";
 
@@ -89,10 +91,10 @@ export default function Header() {
   const desktopLinks = header.desktopLinks;
 
   const socialLinks = [
-    { label: "Instagram", href: site.socials.instagram },
-    { label: "Facebook", href: site.socials.facebook },
-    { label: "X", href: site.socials.x },
-  ].filter((l) => Boolean(l.href));
+    { label: "Instagram", href: site.socials.instagram, Icon: FiInstagram },
+    { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
+    { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
+  ];
 
   /* Animation variants */
   const menuVariants = {
@@ -400,25 +402,31 @@ export default function Header() {
                 <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.45em] text-white/25">
                   Follow Us
                 </p>
-                {socialLinks.length > 0 ? (
-                  <div className="flex flex-wrap gap-5">
-                    {socialLinks.map((s) => (
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map(({ label, href, Icon }) => {
+                    const isReady = Boolean(href);
+                    return (
                       <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
+                        key={label}
+                        href={isReady ? href : "#"}
+                        target={isReady ? "_blank" : undefined}
+                        rel={isReady ? "noopener noreferrer" : undefined}
+                        aria-label={label}
+                        aria-disabled={isReady ? undefined : true}
+                        onClick={(e) => {
+                          if (!isReady) e.preventDefault();
+                        }}
+                        className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 ${
+                          isReady
+                            ? "border-white/10 bg-white/5 text-white/70 hover:-translate-y-1 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                            : "cursor-not-allowed border-white/8 bg-white/[0.03] text-white/25"
+                        }`}
                       >
-                        {s.label}
+                        <Icon className="h-[18px] w-[18px]" />
                       </a>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-                    Social links will be added.
-                  </p>
-                )}
+                    );
+                  })}
+                </div>
               </motion.div>
             </motion.nav>
           </>

@@ -39,12 +39,12 @@ export const DATA = {
       { title: "Contact", href: "#contact" },
     ],
     drawerLinks: [
-      { title: "Our Story", href: "#about" },
-      { title: "Feast of Flavours", href: "#feast" },
-      { title: "South Indian Delights", href: "#delights" },
+      { title: "About", href: "#about" },
+      { title: "Flavours", href: "#feast" },
+      { title: "Delights", href: "#delights" },
       { title: "Catering", href: "#catering" },
-      { title: "Signature Experience", href: "#signature" },
-      { title: "Contact Us", href: "#contact" },
+      { title: "Signature", href: "#signature" },
+      { title: "Contact", href: "#contact" },
     ],
   },
 
