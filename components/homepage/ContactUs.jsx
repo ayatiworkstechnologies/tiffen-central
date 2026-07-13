@@ -132,12 +132,10 @@ export default function ContactUs() {
     };
 
     try {
-      const apiKey = process.env.NEXT_PUBLIC_CONTACT_API_KEY || "3bc72efc00a99a7ad1d1e31225c6a3f833218dfb34d88cc6ecb4c2b9562ab0fd";
-      const response = await fetch("https://api.ayatiworks.com/api/v1/public/ayatiwork/tiffen/records", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-API-Key": apiKey,
         },
         body: JSON.stringify(payload),
       });
