@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import React, { useState } from "react";
@@ -52,9 +52,9 @@ export default function WelcomeSectionPremium() {
                   unoptimized
                   width={700}
                   height={700}
-                  src={site.images.welcomeDish}
+                  src={site.images.heroRight}
                   alt="Tiffen Central Dish"
-                  className="relative h-auto w-full max-w-[320px] object-contain drop-shadow-[0_35px_80px_rgba(0,0,0,0.45)] sm:max-w-[420px] md:max-w-[470px] lg:max-w-[560px]"
+                  className="relative h-auto w-full max-w-[420px] object-contain drop-shadow-[0_45px_90px_rgba(0,0,0,0.5)] sm:max-w-[540px] md:max-w-[620px] lg:max-w-[700px]"
                 />
               </div>
             </Reveal>

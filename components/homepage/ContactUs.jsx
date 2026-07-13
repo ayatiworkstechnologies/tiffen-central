@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail, FiSend } from "react-icons/fi";
 import Button from "../ui/Button";
@@ -27,12 +27,140 @@ const staggerContainer = {
   },
 };
 
+const reviews = [
+  {
+    author: "Suresh Krishnan",
+    rating: 5,
+    text: "The Ghee Podi Masala Dosa was incredibly crisp and flavorful. Best filter coffee in town!",
+    relativeTime: "2 days ago",
+  },
+  {
+    author: "Meera Ramesh",
+    rating: 5,
+    text: "Softest idlis I have ever had. The sambar has the perfect authentic Chennai taste.",
+    relativeTime: "1 week ago",
+  },
+  {
+    author: "Vikram Ananth",
+    rating: 5,
+    text: "Amazing Benne Dosa! The quality of ghee and ingredients is top-notch. Highly recommended.",
+    relativeTime: "3 days ago",
+  },
+  {
+    author: "Priya Sundar",
+    rating: 5,
+    text: "Tried the Ghee Pongal and Medhu Vada. Absolutely delicious and freshly made.",
+    relativeTime: "5 days ago",
+  },
+  {
+    author: "Karthik S.",
+    rating: 5,
+    text: "Great service and clean, hygienic environment. A must-visit place for tiffin lovers.",
+    relativeTime: "1 month ago",
+  },
+  {
+    author: "Divya N.",
+    rating: 5,
+    text: "The Thattu Idly is a game changer! Super soft and goes so well with their podi.",
+    relativeTime: "2 weeks ago",
+  },
+];
+
 const inputClasses =
   "w-full rounded-[18px] border border-[#032818]/[0.12] bg-white/60 px-4 py-3 text-[14px] leading-[1.5] text-[#0f3d33] transition-all duration-300 placeholder:text-[#8a877f] focus:border-[#032818]/[0.24] focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#8bb9a8]/[0.10]";
 
 export default function ContactUs() {
   const site = DATA.site;
   const contact = DATA.sections.contact;
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "General Inquiry",
+    message: "",
+  });
+  const [status, setStatus] = useState("idle"); // idle, submitting, success, error
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    // 1. Read query parameters
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const subjectParam = params.get("subject");
+      if (subjectParam) {
+        const matchedOption = ["General Inquiry", "Table Reservation", "Private Catering", "Feedback"].find(
+          (opt) => opt.toLowerCase().includes(subjectParam.toLowerCase()) || subjectParam.toLowerCase().includes(opt.toLowerCase())
+        );
+        if (matchedOption) {
+          setFormData((prev) => ({ ...prev, subject: matchedOption }));
+        }
+      }
+    }
+
+    // 2. Custom window event listener
+    const handleSetSubject = (e) => {
+      const newSubject = e.detail?.subject;
+      if (newSubject) {
+        setFormData((prev) => ({ ...prev, subject: newSubject }));
+      }
+    };
+    window.addEventListener("tiffen-set-contact-subject", handleSetSubject);
+    return () => window.removeEventListener("tiffen-set-contact-subject", handleSetSubject);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
+
+    const fullname = `${formData.firstName} ${formData.lastName}`.trim();
+    const payload = {
+      data: {
+        fullname,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+      }
+    };
+
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_CONTACT_API_KEY || "3bc72efc00a99a7ad1d1e31225c6a3f833218dfb34d88cc6ecb4c2b9562ab0fd";
+      const response = await fetch("https://api.ayatiworks.com/api/v1/public/ayatiwork/tiffen/records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": apiKey,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`);
+      }
+
+      setStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        subject: "General Inquiry",
+        message: "",
+      });
+    } catch (error) {
+      console.error("API submission error:", error);
+      setStatus("error");
+      setErrorMessage(error.message || "Failed to submit form. Please try again.");
+    }
+  };
   return (
     <section className="relative w-full overflow-hidden bg-background py-12 sm:py-14 md:py-16 lg:py-20">
       <OfferTexture className="opacity-[0.09]" />
@@ -80,16 +208,20 @@ export default function ContactUs() {
                   icon={<FiMapPin />}
                   title="Location"
                   content={
-                    <>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=Tiffen+central,+Govindasamy+Nagar,+Perungudi,+Chennai,+Tamil+Nadu+600096"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline transition-colors duration-300 hover:text-primary inline-block"
+                    >
                       {site.contact.addressLines.map((line) => (
                         <React.Fragment key={line}>
                           {line}
                           <br />
                         </React.Fragment>
                       ))}
-                      <br />
                       {site.contact.cityRegion}
-                    </>
+                    </a>
                   }
                 />
 
@@ -97,18 +229,34 @@ export default function ContactUs() {
                   icon={<FiPhone />}
                   title="Reservations"
                   content={
-                    <>
-                      {site.contact.phone}
-                      <br />
-                      {site.contact.email}
-                    </>
+                    <div className="flex flex-col">
+                      <a
+                        href={`tel:${site.contact.phone.replace(/\s+/g, "")}`}
+                        className="hover:underline transition-colors duration-300 hover:text-primary"
+                      >
+                        {site.contact.phone}
+                      </a>
+                      <a
+                        href={`mailto:${site.contact.email}`}
+                        className="hover:underline transition-colors duration-300 hover:text-primary"
+                      >
+                        {site.contact.email}
+                      </a>
+                    </div>
                   }
                 />
 
                 <ContactItem
                   icon={<FiMail />}
                   title="General Enquiries"
-                  content={<>{site.contact.email}</>}
+                  content={
+                    <a
+                      href={`mailto:${site.contact.email}`}
+                      className="hover:underline transition-colors duration-300 hover:text-primary"
+                    >
+                      {site.contact.email}
+                    </a>
+                  }
                 />
               </div>
             </div>
@@ -119,21 +267,29 @@ export default function ContactUs() {
             <div className="relative z-10 overflow-hidden rounded-[24px] border border-white/70 bg-white/75 p-6 shadow-[0_14px_32px_rgba(0,0,0,0.04)] backdrop-blur-md sm:p-7 md:p-8 lg:p-9">
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.22),transparent_30%)]" />
 
-              <form className="relative z-10 flex flex-col gap-5">
+              <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-5">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <Field label="First Name">
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
                       className={inputClasses}
                       placeholder="Enter first name"
+                      required
                     />
                   </Field>
 
                   <Field label="Last Name">
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
                       className={inputClasses}
                       placeholder="Enter last name"
+                      required
                     />
                   </Field>
                 </div>
@@ -141,14 +297,21 @@ export default function ContactUs() {
                 <Field label="Email Address">
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className={inputClasses}
                     placeholder="Enter email address"
+                    required
                   />
                 </Field>
 
                 <Field label="Mobile Number">
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     inputMode="tel"
                     autoComplete="tel"
                     className={inputClasses}
@@ -160,34 +323,122 @@ export default function ContactUs() {
 
                 <Field label="Subject">
                   <select
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     className={`${inputClasses} appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23004f34%22%3E%3Cpath%20d%3D%22M5.22%208.22a.75.75%200%200%201%201.06%200L10%2011.94l3.72-3.72a.75.75%200%201%201%201.06%201.06l-4.25%204.25a.75.75%200%200%201-1.06%200L5.22%209.28a.75.75%200%200%201%200-1.06Z%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_14px_center] bg-no-repeat`}
                   >
-                    <option>General Inquiry</option>
-                    <option>Table Reservation</option>
-                    <option>Private Catering</option>
-                    <option>Feedback</option>
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Table Reservation">Table Reservation</option>
+                    <option value="Private Catering">Private Catering</option>
+                    <option value="Feedback">Feedback</option>
                   </select>
                 </Field>
 
                 <Field label="Message">
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={5}
                     className={`${inputClasses} min-h-[110px] resize-none`}
                     placeholder="Write your message..."
+                    required
                   />
                 </Field>
+
+                {status === "success" && (
+                  <div className="rounded-[18px] bg-green-500/10 p-4 text-[13px] font-bold text-green-800 border border-green-500/20 text-center">
+                    Thank you! Your message has been sent successfully.
+                  </div>
+                )}
+                {status === "error" && (
+                  <div className="rounded-[18px] bg-red-500/10 p-4 text-[13px] font-bold text-red-800 border border-red-500/20 text-center">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <Button
                   type="submit"
                   variant="primary"
                   className="w-full"
+                  disabled={status === "submitting"}
                 >
-                  <span className="flex items-center gap-2.5">
-                    Send Message
-                    <FiSend className="text-[14px] transition-transform duration-500 group-hover:translate-x-1" />
+                  <span className="flex items-center justify-center gap-2.5">
+                    {status === "submitting" ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <FiSend className="text-[14px] transition-transform duration-500 group-hover:translate-x-1" />
+                      </>
+                    )}
                   </span>
                 </Button>
               </form>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Map & Reviews Panel */}
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+          {/* Left: Map */}
+          {site.contact.mapIframe && (
+            <motion.div
+              variants={fadeUp}
+              className="overflow-hidden rounded-[24px] border border-primary/10 bg-white/60 p-2 shadow-[0_12px_28px_rgba(0,0,0,0.03)] backdrop-blur-sm h-[400px] lg:h-[480px]"
+            >
+              <iframe
+                src={site.contact.mapIframe}
+                className="h-full w-full rounded-[18px] border-0"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="Tiffen Central Location Map"
+              />
+            </motion.div>
+          )}
+
+          {/* Right: Google Reviews Auto-Scroll */}
+          <motion.div
+            variants={fadeUp}
+            className="relative overflow-hidden rounded-[24px] border border-primary/10 bg-white/60 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.03)] backdrop-blur-sm h-[400px] lg:h-[480px] flex flex-col"
+          >
+            {/* Header */}
+            <div className="mb-4 flex items-center justify-between border-b border-primary/10 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-[18px] font-semibold text-primary">Google Reviews</span>
+                <span className="flex items-center text-[#ffc107] text-[14px]">
+                  {"★".repeat(5)}
+                </span>
+              </div>
+              <span className="text-[12px] text-primary/60 font-medium">4.8 / 5 Rating</span>
+            </div>
+
+            {/* Scroll Container */}
+            <div className="relative flex-1 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
+              <div className="absolute inset-x-0 top-0 flex flex-col gap-4 animate-[tc-vertical-scroll_25s_linear_infinite] hover:[animation-play-state:paused]">
+                {/* Double the list to make scrolling loop seamless */}
+                {[...reviews, ...reviews].map((review, index) => (
+                  <div
+                    key={index}
+                    className="rounded-[18px] border border-primary/5 bg-white/80 p-4 shadow-sm"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-serif text-sm font-semibold text-primary">{review.author}</span>
+                      <span className="text-xs text-[#ffc107]">{"★".repeat(review.rating)}</span>
+                    </div>
+                    <p className="mt-2 text-xs leading-relaxed text-[#6d6d6d]">{review.text}</p>
+                    <span className="mt-2 block text-[10px] text-primary/50">{review.relativeTime}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>

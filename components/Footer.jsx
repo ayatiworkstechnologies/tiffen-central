@@ -1,11 +1,12 @@
-﻿"use client";
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { RiTwitterXLine } from "react-icons/ri";
 import { DATA } from "@/content/data";
+import MenuModal from "./homepage/MenuModal";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -27,10 +28,17 @@ const staggerContainer = {
 export default function Footer() {
   const site = DATA.site;
   const footer = DATA.footer;
+  const [openMenu, setOpenMenu] = useState(false);
+
+  useEffect(() => {
+    const handleOpen = () => setOpenMenu(true);
+    window.addEventListener("tiffen-open-menu", handleOpen);
+    return () => window.removeEventListener("tiffen-open-menu", handleOpen);
+  }, []);
   const socials = [
     { label: "Instagram", href: site.socials.instagram, Icon: FiInstagram },
-    { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
-    { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
+    // { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
+    // { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
   ];
 
   return (
@@ -71,35 +79,33 @@ export default function Footer() {
             </h3>
 
             <p className="text-[13px] leading-7 text-white/70 transition-colors hover:text-white">
-              {site.contact.addressLines.map((line) => (
-                <React.Fragment key={line}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
-              <br />
-              {site.contact.cityRegion}
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Tiffen+central,+Govindasamy+Nagar,+Perungudi,+Chennai,+Tamil+Nadu+600096"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {site.contact.addressLines.map((line) => (
+                  <React.Fragment key={line}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+                {site.contact.cityRegion}
+              </a>
             </p>
 
             <p className="mt-4 text-[13px] leading-7 text-white/70">
               <a
-                href={
-                  site.contact.email === "[Email to be updated]"
-                    ? "#"
-                    : `mailto:${site.contact.email}`
-                }
-                className="transition-colors hover:text-white"
+                href={`mailto:${site.contact.email}`}
+                className="transition-colors hover:text-white hover:underline"
               >
                 {site.contact.email}
               </a>
               <br />
               <a
-                href={
-                  site.contact.phone === "[Phone to be updated]"
-                    ? "#"
-                    : `tel:${site.contact.phone}`
-                }
-                className="transition-colors hover:text-white"
+                href={`tel:${site.contact.phone.replace(/\s+/g, "")}`}
+                className="transition-colors hover:text-white hover:underline"
               >
                 {site.contact.phone}
               </a>
@@ -130,16 +136,28 @@ export default function Footer() {
             </h3>
 
             <ul className="space-y-3 text-[13px] text-white/70">
-              {footer.exploreLinks.map((l) => (
-                <li key={l.title}>
-                  <Link
-                    href={l.href}
-                    className="inline-flex transition-all duration-300 hover:translate-x-1 hover:text-white"
-                  >
-                    {l.title}
-                  </Link>
-                </li>
-              ))}
+              {footer.exploreLinks.map((l) => {
+                const isMenuLink = l.title === "Our Menu";
+                return (
+                  <li key={l.title}>
+                    {isMenuLink ? (
+                      <button
+                        onClick={() => window.dispatchEvent(new Event("tiffen-open-menu"))}
+                        className="inline-flex transition-all duration-300 hover:translate-x-1 hover:text-white cursor-pointer text-left bg-transparent border-0 p-0 text-white/70 font-sans font-medium"
+                      >
+                        {l.title}
+                      </button>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        className="inline-flex transition-all duration-300 hover:translate-x-1 hover:text-white"
+                      >
+                        {l.title}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </motion.div>
         </div>
@@ -162,11 +180,10 @@ export default function Footer() {
                   onClick={(e) => {
                     if (!isReady) e.preventDefault();
                   }}
-                  className={`text-[16px] transition-all duration-300 ${
-                    isReady
+                  className={`text-[16px] transition-all duration-300 ${isReady
                       ? "text-white/45 hover:-translate-y-1 hover:text-accent"
                       : "text-white/25 cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   <Icon />
                 </a>
@@ -175,7 +192,7 @@ export default function Footer() {
           </div>
 
           <p className="text-center text-[11px] uppercase tracking-[0.18em] text-white/45">
-            (c) {new Date().getFullYear()} {site.brand.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.brand.name}. All rights reserved.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-2 text-center text-[11px] uppercase tracking-[0.18em] text-white/45 md:flex-row">
@@ -198,6 +215,7 @@ export default function Footer() {
           </div>
         </motion.div>
       </motion.div>
+      <MenuModal open={openMenu} onClose={() => setOpenMenu(false)} />
     </footer>
   );
 }

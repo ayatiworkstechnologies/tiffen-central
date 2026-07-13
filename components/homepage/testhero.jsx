@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -111,6 +111,11 @@ export default function HeroSection() {
                   document
                     .getElementById("contact")
                     ?.scrollIntoView({ behavior: "smooth" });
+                  window.dispatchEvent(
+                    new CustomEvent("tiffen-set-contact-subject", {
+                      detail: { subject: "Table Reservation" },
+                    })
+                  );
                 }}
               >
                 Book Table

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Inquiry | Tiffen Central</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f7eed8;
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #062a1e;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #f7eed8;
+      padding: 40px 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #faf5eb;
+      border: 3px double #004f34;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .header {
+      background-color: #004f34;
+      text-align: center;
+      padding: 30px 20px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fffbf4;
+      line-height: 1.2;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #faf4e8;
+      opacity: 0.85;
+    }
+
+    .ribbon {
+      margin: 15px auto 0;
+      display: inline-block;
+      background-color: #5c2a18;
+      color: #faf4e8;
+      padding: 6px 16px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 2px;
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    .intro {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      color: #062a1e;
+    }
+
+    .details-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #d5be9b;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    .details-table th,
+    .details-table td {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 13px;
+      border-bottom: 1px solid #f2e7d5;
+    }
+
+    .details-table tr:last-child th,
+    .details-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .details-table th {
+      background-color: #fcfaf5;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #004f34;
+      width: 35%;
+      border-right: 1px solid #f2e7d5;
+    }
+
+    .details-table td {
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    .message-box {
+      background-color: #fdfbf7;
+      border-left: 4px solid #c4512a;
+      padding: 15px 20px;
+      margin-top: 5px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #4a4a4a;
+    }
+
+    .footer {
+      background-color: #f0e6d2;
+      padding: 25px 20px;
+      text-align: center;
+      border-top: 1px solid #d5be9b;
+    }
+
+    .footer p {
+      margin: 0;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #004f34;
+      opacity: 0.8;
+    }
+
+    .veg-symbol {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #19802b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .veg-box {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #19802b;
+      display: inline-block;
+      position: relative;
+      background: #ffffff;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+
+    .veg-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #19802b;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1>Tiffen Central</h1>
+        <p>Est. 1994 • Fresh • Hot • Traditional</p>
+        <div class="ribbon">New Website Inquiry</div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <div class="intro">
+          Hello Admin,<br><br>
+          A new customer has sent an inquiry via the contact form on your website. Here are the details:
+        </div>
+
+        <table class="details-table">
+          <tr>
+            <th>Inquiry Subject</th>
+            <td style="font-weight: 700; color: #c4512a;">{subject}</td>
+          </tr>
+          <tr>
+            <th>Customer Name</th>
+            <td>{fullname}</td>
+          </tr>
+          <tr>
+            <th>Email Address</th>
+            <td><a href="mailto:{email}" style="color: #004f34; text-decoration: underline;">{email}</a></td>
+          </tr>
+          <tr>
+            <th>Mobile Number</th>
+            <td><a href="tel:{phone}" style="color: #004f34; text-decoration: underline;">{phone}</a></td>
+          </tr>
+          <tr>
+            <th>Message</th>
+            <td>
+              <div class="message-box">
+                {message}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>✦ Thank You! Tiffen Central ✦</p>
+        <div class="veg-symbol">
+          <span class="veg-box"><span class="veg-dot"></span></span>
+          Pure Veg
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

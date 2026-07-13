@@ -1,0 +1,257 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 22px 14px;
+  background: rgba(20, 13, 7, 0.76);
+  backdrop-filter: blur(5px);
+}
+
+.sheet {
+  --green: #174d27;
+  --brown: #6e260d;
+  position: relative;
+  width: min(100%, 980px);
+  min-height: 1240px;
+  margin: 0 auto;
+  padding: 29px 28px 20px;
+  overflow: hidden;
+  color: #171712;
+  border: 3px solid var(--green);
+  border-radius: 4px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+  background-color: #f8eed8;
+  background-image:
+    radial-gradient(circle at 18% 14%, rgba(105, 65, 24, 0.055) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 70%, rgba(105, 65, 24, 0.045) 0 1px, transparent 1.5px),
+    repeating-linear-gradient(7deg, transparent 0 8px, rgba(101, 71, 34, 0.018) 9px 10px);
+  background-size: 21px 21px, 27px 27px, auto;
+}
+
+.innerBorder {
+  position: absolute;
+  inset: 7px;
+  z-index: 20;
+  border: 1px solid var(--green);
+  pointer-events: none;
+}
+
+.innerBorder::before,
+.innerBorder::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--green);
+}
+
+.innerBorder::before { left: -1px; top: -1px; border-left: 3px double; border-top: 3px double; border-radius: 0 0 24px; }
+.innerBorder::after { right: -1px; bottom: -1px; border-right: 3px double; border-bottom: 3px double; border-radius: 24px 0 0; }
+
+.close {
+  position: sticky;
+  float: right;
+  top: 12px;
+  z-index: 50;
+  width: 42px;
+  height: 42px;
+  margin: 1px 0 -43px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(23, 77, 39, 0.35);
+  border-radius: 50%;
+  color: var(--green);
+  background: rgba(248, 238, 216, 0.92);
+  cursor: pointer;
+  transition: 180ms ease;
+}
+
+.close:hover { color: #fff; background: var(--green); transform: rotate(90deg); }
+.close svg { width: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+.header {
+  position: relative;
+  min-height: 376px;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cloche { width: 118px; height: 49px; color: var(--brown); }
+.cloche svg { width: 100%; fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; }
+
+.brandLogo {
+  position: relative;
+  z-index: 2;
+  width: min(52%, 470px);
+  margin-top: 1px;
+  padding: 8px 18px 5px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at center, rgba(255, 252, 241, .82), rgba(255, 252, 241, 0) 72%);
+}
+
+.brandLogoImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter:
+    brightness(.58)
+    saturate(2.15)
+    contrast(1.32)
+    drop-shadow(0 2px 0 rgba(255,255,255,.7))
+    drop-shadow(0 4px 8px rgba(23,77,39,.16));
+}
+
+.ribbon {
+  position: relative;
+  z-index: 3;
+  margin-top: 30px;
+  padding: 8px 31px;
+  color: #fff7e8;
+  background: var(--brown);
+  font-family: var(--font-sora), sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 7% 50%, 0 100%, 100% 100%, 93% 50%, 100% 0);
+}
+
+.tagline { margin: 17px 0 0; display: flex; gap: 14px; color: var(--green); font-size: 16px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.tagline i { color: #e66a16; font-style: normal; }
+.flourish { width: 175px; margin-top: 12px; display: flex; align-items: center; gap: 8px; color: #42824c; }
+.flourish span { flex: 1; height: 1px; background: #a27420; }
+
+.freshBadge {
+  position: absolute;
+  right: 12px;
+  top: 25px;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  border: 3px double #52834e;
+  border-radius: 50%;
+  outline: 1px dashed #52834e;
+  outline-offset: -8px;
+  text-transform: uppercase;
+  transform: rotate(-5deg);
+}
+.freshBadge span { font-size: 13px; font-weight: 800; letter-spacing: .12em; }
+.freshBadge strong { margin: 6px 0; font-size: 17px; }
+.freshBadge small { font-size: 11px; font-weight: 800; }
+
+.heroDish { position: absolute; z-index: 1; overflow: hidden; filter: drop-shadow(0 7px 8px rgba(48, 24, 8, .28)); }
+.heroDishLeft { left: -69px; top: 7px; width: 250px; height: 230px; transform: rotate(-7deg); border-radius: 42% 52% 48% 35%; }
+.heroDishRight { right: -66px; top: 175px; width: 240px; height: 190px; transform: rotate(3deg); border-radius: 48% 45% 35% 50%; }
+.heroPhoto { object-fit: contain; filter: drop-shadow(0 7px 8px rgba(48, 24, 8, .22)); }
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.panel {
+  --category: var(--green);
+  position: relative;
+  min-height: 274px;
+  padding: 17px 17px 15px 21px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, rgba(255, 253, 246, 0.78), rgba(249, 237, 211, 0.56));
+  box-shadow:
+    0 8px 20px rgba(78, 49, 17, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.52);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 13px 28px rgba(78, 49, 17, 0.13),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.68);
+}
+
+.panelBorder { position: absolute; inset: 3px; z-index: 4; width: calc(100% - 6px); height: calc(100% - 6px); overflow: visible; fill: none; stroke: #ad8e50; stroke-width: 1.2; vector-effect: non-scaling-stroke; pointer-events: none; }
+
+.panelHeading { position: relative; z-index: 5; display: flex; align-items: center; gap: 13px; }
+.iconDisc { width: 50px; height: 50px; flex: 0 0 50px; display: grid; place-items: center; color: #fff; background: var(--category); border: 3px solid rgba(255,255,255,.72); border-radius: 50%; box-shadow: 0 4px 10px rgba(50,30,12,.13); }
+.iconDisc svg { width: 31px; height: 31px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.panelHeading h2 { min-width: 0; color: var(--category); font-family: var(--font-kavo), Georgia, serif; font-size: 23px; font-weight: 900; letter-spacing: .055em; line-height: 1; text-transform: uppercase; text-shadow: 0 1px 0 #fff; }
+.dots { position: relative; z-index: 5; width: min(250px, 66%); margin: -2px 0 15px 63px; border-bottom: 3px dotted var(--category); opacity: .72; }
+
+.items { position: relative; z-index: 5; width: 55%; display: grid; gap: 8px; }
+.items li { display: flex; align-items: flex-start; gap: 9px; font-family: var(--font-sora), sans-serif; font-size: 14px; font-weight: 650; line-height: 1.26; }
+.items svg { width: 13px; height: 13px; flex: 0 0 13px; margin-top: 2px; fill: var(--category); stroke: var(--category); stroke-width: 1.1; }
+
+.foodImage { position: absolute; right: -10px; bottom: -10px; z-index: 2; width: 54%; height: 72%; }
+.foodPhoto {
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(1.06) contrast(1.03) drop-shadow(0 7px 8px rgba(49, 28, 9, .18));
+}
+.compactPanel { min-height: 224px; }
+.compactPanel .foodImage { width: 49%; height: 72%; }
+
+.footer { position: relative; z-index: 5; min-height: 55px; padding: 16px 15px 0; display: flex; align-items: center; justify-content: center; color: var(--green); font-family: var(--font-sora), sans-serif; font-size: 14px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.veg { position: absolute; right: 8px; display: flex; align-items: center; gap: 7px; letter-spacing: .04em; }
+.veg i { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid #19802b; border-radius: 2px; background: #fff; }
+.veg b { width: 13px; height: 13px; border-radius: 50%; background: #19802b; }
+
+@media (max-width: 820px) {
+  .sheet { padding: 25px 20px 18px; }
+  .header { min-height: 330px; }
+  .heroDishLeft { left: -75px; width: 210px; height: 200px; }
+  .heroDishRight { right: -75px; top: 165px; width: 205px; height: 165px; }
+  .freshBadge { right: 3px; width: 104px; height: 104px; }
+  .freshBadge strong { font-size: 13px; }
+  .menuGrid, .bottomGrid { gap: 11px; }
+  .bottomGrid { margin-top: 11px; }
+  .panel { min-height: 254px; padding: 15px 14px 13px 16px; }
+  .panelHeading h2 { font-size: 18px; }
+  .iconDisc { width: 40px; height: 40px; flex-basis: 40px; }
+  .dots { margin-left: 52px; }
+  .items li { font-size: 12px; }
+}
+
+@media (max-width: 620px) {
+  .backdrop { padding: 0; }
+  .sheet { width: 100%; min-height: 100vh; padding: 22px 13px 15px; border-width: 2px; border-radius: 0; }
+  .innerBorder { inset: 5px; }
+  .close { top: 9px; right: 2px; width: 36px; height: 36px; }
+  .header { min-height: 280px; padding-top: 11px; }
+  .cloche { width: 78px; height: 38px; }
+  .brandLogo { width: min(67%, 260px); margin-top: 3px; padding: 6px 12px 4px; }
+  .ribbon { margin-top: 22px; padding: 7px 24px; font-size: 10px; }
+  .tagline { margin-top: 13px; gap: 7px; font-size: 10px; }
+  .flourish { margin-top: 9px; }
+  .freshBadge { display: none; }
+  .heroDishLeft { left: -60px; top: 10px; width: 118px; height: 132px; opacity: .88; }
+  .heroDishRight { right: -57px; top: 145px; width: 145px; height: 120px; opacity: .92; }
+  .menuGrid, .bottomGrid { grid-template-columns: 1fr; gap: 12px; }
+  .bottomGrid { margin-top: 12px; }
+  .panel { min-height: 234px; border-radius: 12px; }
+  .panelHeading h2 { font-size: 17px; line-height: 1.08; }
+  .items { width: 57%; }
+  .items li { font-size: 13px; }
+  .foodImage { width: 48%; height: 72%; }
+  .compactPanel { min-height: 200px; }
+  .footer { padding: 17px 4px 0; flex-direction: column; gap: 12px; font-size: 10px; }
+  .veg { position: static; }
+}

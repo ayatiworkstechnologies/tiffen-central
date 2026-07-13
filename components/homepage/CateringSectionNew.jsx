@@ -105,6 +105,11 @@ export default function CateringSectionNew() {
                   document
                     .getElementById("contact")
                     ?.scrollIntoView({ behavior: "smooth" });
+                  window.dispatchEvent(
+                    new CustomEvent("tiffen-set-contact-subject", {
+                      detail: { subject: "Private Catering" },
+                    })
+                  );
                 }}
               >
                 {catering.cta?.label || "Enquire Now"}
