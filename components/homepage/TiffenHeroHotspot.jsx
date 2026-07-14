@@ -32,8 +32,8 @@ const dishes = [
   },
   {
     id: 4,
-    name: "Zesty Lemon Rice",
-    desc: "Tangy lemon rice with curry leaves, mustard, and roasted seasoning.",
+    name: "Pineapple Kesari",
+    desc: "A rich, aromatic, ghee-laden semolina sweet infused with saffron and pineapple chunks.",
     x: "78%",
     y: "52%",
     position: "right",

@@ -102,24 +102,30 @@ export default function HeroSection() {
               {...fadeUp(0.85)}
               className="mt-10 flex flex-wrap items-center justify-center gap-4"
             >
-              <Button variant="secondary" onClick={() => setOpenMenu(true)}>
-                Explore Menu
-              </Button>
-              <Button
-                variant="light"
-                onClick={() => {
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  window.dispatchEvent(
-                    new CustomEvent("tiffen-set-contact-subject", {
-                      detail: { subject: "Table Reservation" },
-                    })
-                  );
-                }}
-              >
-                Book Table
-              </Button>
+              {hero.ctas?.map((cta, idx) => (
+                <Button
+                  key={cta.label}
+                  variant={idx === 0 ? "secondary" : "light"}
+                  onClick={() => {
+                    if (cta.action === "open_menu") {
+                      setOpenMenu(true);
+                    } else if (cta.action === "scroll_contact") {
+                      document
+                        .getElementById("contact")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                      if (cta.subject) {
+                        window.dispatchEvent(
+                          new CustomEvent("tiffen-set-contact-subject", {
+                            detail: { subject: cta.subject },
+                          })
+                        );
+                      }
+                    }
+                  }}
+                >
+                  {cta.label}
+                </Button>
+              ))}
             </motion.div>
 
             <motion.div

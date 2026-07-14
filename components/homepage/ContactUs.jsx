@@ -456,9 +456,9 @@ function ContactItem({ icon, title, content }) {
         <h4 className="font-serif text-[16px] tracking-[0.02em] text-primary">
           {title}
         </h4>
-        <p className="mt-1.5 text-[13px] leading-6 text-[#6d6d6d] sm:text-[14px]">
+        <div className="mt-1.5 text-[13px] leading-6 text-[#6d6d6d] sm:text-[14px]">
           {content}
-        </p>
+        </div>
       </div>
     </div>
   );

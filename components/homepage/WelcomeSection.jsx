@@ -99,7 +99,25 @@ export default function WelcomeSectionPremium() {
                 </motion.p>
 
                 <div className="mt-10 flex items-center gap-6">
-                  <Button variant="primary" onClick={() => setOpenMenu(true)}>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      if (feast.cta?.action === "open_menu") {
+                        setOpenMenu(true);
+                      } else if (feast.cta?.action === "scroll_contact") {
+                        document
+                          .getElementById("contact")
+                          ?.scrollIntoView({ behavior: "smooth" });
+                        if (feast.cta?.subject) {
+                          window.dispatchEvent(
+                            new CustomEvent("tiffen-set-contact-subject", {
+                              detail: { subject: feast.cta.subject },
+                            })
+                          );
+                        }
+                      }
+                    }}
+                  >
                     {feast.cta?.label || "View Menu"}
                   </Button>
                 </div>

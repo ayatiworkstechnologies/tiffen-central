@@ -102,21 +102,25 @@ export default function CateringSectionNew() {
               <Button
                 variant="primary"
                 onClick={() => {
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  window.dispatchEvent(
-                    new CustomEvent("tiffen-set-contact-subject", {
-                      detail: { subject: "Private Catering" },
-                    })
-                  );
+                  if (catering.cta?.action === "scroll_contact") {
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                    if (catering.cta?.subject) {
+                      window.dispatchEvent(
+                        new CustomEvent("tiffen-set-contact-subject", {
+                          detail: { subject: catering.cta.subject },
+                        })
+                      );
+                    }
+                  }
                 }}
               >
                 {catering.cta?.label || "Enquire Now"}
               </Button>
               {site.contact.phone !== "[Phone to be updated]" ? (
                 <a
-                  href={`tel:${site.contact.phone}`}
+                  href={`tel:${site.contact.phone.replace(/\s+/g, "")}`}
                   className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary/65 transition-colors hover:text-primary"
                 >
                   {site.contact.phone}

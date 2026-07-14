@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import React, { useState } from "react";
@@ -61,19 +61,34 @@ export default function FeastOfFlavours() {
               variants={fadeUp}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <Button variant="secondary" onClick={() => setOpenMenu(true)}>
-                {about.ctas[0]?.label || "View Menu"}
-              </Button>
-              <Button
-                variant="light"
-                onClick={() => {
-                  document
-                    .getElementById("delights")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                {about.ctas[1]?.label || "Explore Delights"}
-              </Button>
+              {about.ctas?.map((cta, idx) => (
+                <Button
+                  key={cta.label}
+                  variant={idx === 0 ? "secondary" : "light"}
+                  onClick={() => {
+                    if (cta.action === "open_menu") {
+                      setOpenMenu(true);
+                    } else if (cta.action === "scroll_delights") {
+                      document
+                        .getElementById("delights")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    } else if (cta.action === "scroll_contact") {
+                      document
+                        .getElementById("contact")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                      if (cta.subject) {
+                        window.dispatchEvent(
+                          new CustomEvent("tiffen-set-contact-subject", {
+                            detail: { subject: cta.subject },
+                          })
+                        );
+                      }
+                    }
+                  }}
+                >
+                  {cta.label}
+                </Button>
+              ))}
             </motion.div>
           </Reveal>
 

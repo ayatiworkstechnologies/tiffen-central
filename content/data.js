@@ -69,6 +69,10 @@ export const DATA = {
 
         "Chennai authentic",
       ],
+      ctas: [
+        { label: "Explore Menu", action: "open_menu" },
+        { label: "Book Table", action: "scroll_contact", subject: "Table Reservation" },
+      ],
     },
     about: {
       chip: "Our Legacy",
@@ -77,8 +81,8 @@ export const DATA = {
       body:
         "A warm South Indian restaurant in Perungudi where cafe comfort meets relaxed dining. From crispy dosas and fluffy idlis to medhu vada, pongal and filter coffee, every dish is prepared fresh and rooted in Tamil Nadu's food heritage.",
       ctas: [
-        { label: "View Menu", action: "open_menu" },
         { label: "Explore Delights", action: "scroll_delights" },
+        { label: "Book Table", action: "scroll_contact", subject: "Table Reservation" },
       ],
     },
     feast: {
@@ -87,7 +91,7 @@ export const DATA = {
       titleLine2: "Flavours",
       body:
         "Explore freshly prepared Chennai tiffin favourites and cafe classics. Dosas, idlis, vadas, pongal, poori, kesari and coffee bring traditional South Indian flavours together for breakfast, dinner and every craving in between.",
-      cta: { label: "View Menu", action: "open_menu" },
+      cta: { label: "View Full Menu", action: "open_menu" },
     },
     catering: {
       eyebrow: "Catering",
@@ -95,7 +99,7 @@ export const DATA = {
       titleLine2: "to your event",
       body:
         "New catering content will be added here once the client shares the final package details, menu options, and service inclusions.",
-      cta: { label: "Enquire Now", action: "scroll_contact" },
+      cta: { label: "Enquire Now", action: "scroll_contact", subject: "Private Catering" },
     },
     contact: {
       eyebrow: "Get In Touch",

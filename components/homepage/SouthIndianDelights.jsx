@@ -276,10 +276,10 @@ export default function SouthIndianDelights() {
             <motion.div variants={fadeUp} className="bg-white/80 p-3">
               <div className="p-3">
                 <h3 className="font-serif text-[20px] uppercase leading-[1.05] text-primary">
-                  Zesty Lemon Rice
+                  Filter Coffee
                 </h3>
                 <p className="mt-2 text-[12px] leading-5 text-primary/60">
-                  Tangy, vibrant, fragrant, light, homely, refreshing.
+                  Aromatic, strong, perfectly frothed, freshly brewed, comforting, traditional.
                 </p>
               </div>
 
@@ -287,8 +287,8 @@ export default function SouthIndianDelights() {
                 unoptimized
                 width={800}
                 height={800}
-                src="/auth-9.png"
-                alt="Lemon Rice"
+                src="/menu/menu-6.png"
+                alt="Filter Coffee"
                 className="h-[180px] w-full object-cover"
               />
             </motion.div>
