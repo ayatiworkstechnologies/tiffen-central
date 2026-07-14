@@ -181,8 +181,8 @@ export default function Footer() {
                     if (!isReady) e.preventDefault();
                   }}
                   className={`text-[16px] transition-all duration-300 ${isReady
-                      ? "text-white/45 hover:-translate-y-1 hover:text-accent"
-                      : "text-white/25 cursor-not-allowed"
+                    ? "text-white/45 hover:-translate-y-1 hover:text-accent"
+                    : "text-white/25 cursor-not-allowed"
                     }`}
                 >
                   <Icon />
@@ -201,16 +201,15 @@ export default function Footer() {
               href="https://ayatiworks.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-85 inline-flex"
             >
-              <div className="flex items-center justify-center rounded border border-white/10 bg-white/5 px-2 py-1 transition-colors group-hover:bg-white/10">
-                <span className="font-sans text-[10px] font-bold tracking-[0.2em] text-accent">
-                  AYATI
-                </span>
-                <span className="font-sans text-[10px] font-light tracking-[0.2em] text-white">
-                  WORKS
-                </span>
-              </div>
+              <Image
+                src="/ayati-logo-web-no-bg.png"
+                alt="Ayati Works"
+                width={150}
+                height={40}
+                className="h-12 w-auto object-contain brightness-0 invert"
+              />
             </Link>
           </div>
         </motion.div>
