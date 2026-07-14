@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const payload = await request.json();
-    const apiKey = process.env.NEXT_PUBLIC_CONTACT_API_KEY || "3bc72efc00a99a7ad1d1e31225c6a3f833218dfb34d88cc6ecb4c2b9562ab0fd";
+    const apiKey = process.env.NEXT_PUBLIC_CONTACT_API_KEY || "12ed572087294344bd7acf96d1ca8bd1b881ffc9d8340061ff760eea154a089b";
 
-    const response = await fetch("https://api.ayatiworks.com/api/v1/public/ayatiwork/tiffen/records", {
+    const response = await fetch("https://api.ayatiworks.com/api/v1/public/tiffen-central/contact/records", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
