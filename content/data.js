@@ -7,7 +7,7 @@ export const DATA = {
     contact: {
       addressLines: ["Govindasamy Nagar", "Perungudi"],
       cityRegion: "Chennai, Tamil Nadu 600096",
-      email: "info@tiffencentral.com",
+      email: "tiffencentral@gmail.com",
       phone: "+91 91768 39842",
       mapIframe: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36757.199422413825!2d80.22238872824276!3d12.985986647910096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525ddbd385b09b%3A0xf3b13b5446f48a4!2sTiffen%20central!5e0!3m2!1sen!2sin!4v1783945293596!5m2!1sen!2sin",
     },
@@ -60,12 +60,12 @@ export const DATA = {
 
   sections: {
     hero: {
-      eyebrow: "Authentic South Indian",
+      eyebrow: "South Indian Restaurant in Perungudi, Chennai",
       title: "Tiffen Central",
       subtitle:
-        "From Chennai to your table. Fresh tiffins, timeless recipes, and a warm dining atmosphere built around comfort.",
+        "Fresh dosa, idli, vada, pongal and filter coffee inspired by Tamil Nadu's tiffin traditions, served in the heart of Perungudi, Chennai.",
       badges: [
-        "Open daily - 7:00 AM to 10:30 PM",
+        "Open 7 days - see hours below",
 
         "Chennai authentic",
       ],
@@ -75,7 +75,7 @@ export const DATA = {
       titleLine1: "Welcome to",
       titleLine2: "Tiffen Central",
       body:
-        "A warm, vibrant space where cafe comfort meets premium dining. From crispy dosas and fluffy idlis to filter coffee and seasonal specials, every dish is prepared fresh and rooted in heritage.",
+        "A warm South Indian restaurant in Perungudi where cafe comfort meets relaxed dining. From crispy dosas and fluffy idlis to medhu vada, pongal and filter coffee, every dish is prepared fresh and rooted in Tamil Nadu's food heritage.",
       ctas: [
         { label: "View Menu", action: "open_menu" },
         { label: "Explore Delights", action: "scroll_delights" },
@@ -86,7 +86,7 @@ export const DATA = {
       titleLine1: "A Feast of",
       titleLine2: "Flavours",
       body:
-        "Indulge in freshly prepared tiffins and cafe classics, crafted to satisfy every craving. Premium ingredients, traditional spices, and South Indian heritage come together for a comfort-first dining experience.",
+        "Explore freshly prepared Chennai tiffin favourites and cafe classics. Dosas, idlis, vadas, pongal, poori, kesari and coffee bring traditional South Indian flavours together for breakfast, dinner and every craving in between.",
       cta: { label: "View Menu", action: "open_menu" },
     },
     catering: {
