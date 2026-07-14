@@ -53,9 +53,9 @@ export default function Footer() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.12 }}
         variants={staggerContainer}
-        className="relative z-10 tc-container py-12"
+        className="relative z-10 tc-container py-8"
       >
-        <div className="grid grid-cols-1 gap-10 border-b border-white/10 pb-10 md:grid-cols-[0.9fr_1fr_1fr_1fr] md:gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 gap-10 border-b border-white/10 pb-10 md:grid-cols-[0.9fr_1.1fr_1fr] md:gap-8 lg:gap-12">
           <motion.div variants={fadeUp} className="flex flex-col items-start">
             <Link href="/" className="inline-block">
               <Image
@@ -114,24 +114,6 @@ export default function Footer() {
 
           <motion.div variants={fadeUp}>
             <h3 className="mb-5 font-serif text-[18px] uppercase tracking-[0.18em] text-accent">
-              Hours
-            </h3>
-
-            <ul className="space-y-4 text-[13px] text-white/70">
-              {site.hours.map((h) => (
-                <li
-                  key={h.label}
-                  className="flex items-center justify-between border-b border-white/10 pb-2 transition-colors hover:border-white/25 hover:text-white"
-                >
-                  <span>{h.label}</span>
-                  <span>{h.value}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div variants={fadeUp}>
-            <h3 className="mb-5 font-serif text-[18px] uppercase tracking-[0.18em] text-accent">
               Explore
             </h3>
 
@@ -164,7 +146,7 @@ export default function Footer() {
 
         <motion.div
           variants={fadeUp}
-          className="mt-8 flex flex-col items-center justify-between gap-5 sm:flex-row"
+          className="mt-1 flex flex-col items-center justify-between gap-5 sm:flex-row"
         >
           <div className="flex gap-5">
             {socials.map(({ label, href, Icon }) => {
@@ -195,19 +177,19 @@ export default function Footer() {
             © {new Date().getFullYear()} {site.brand.name}. All rights reserved.
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-2 text-center text-[11px] uppercase tracking-[0.18em] text-white/45 md:flex-row">
+          <div className="flex flex-row items-center justify-center gap-2 text-center text-[11px] uppercase tracking-[0.18em] text-white/45">
             <span>Designed and developed by</span>
             <Link
               href="https://ayatiworks.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-opacity hover:opacity-85 inline-flex"
+              className="transition-opacity hover:opacity-85 inline-flex items-center"
             >
               <Image
                 src="/ayati-logo-web-no-bg.png"
                 alt="Ayati Works"
-                width={150}
-                height={40}
+                width={120}
+                height={32}
                 className="h-12 w-auto object-contain brightness-0 invert"
               />
             </Link>
