@@ -29,6 +29,9 @@ export const metadata = {
   description: seo.description,
   applicationName: seo.name,
   keywords: [
+    "best veg restaurant in Perungudi",
+    "best vegetarian restaurant in Perungudi",
+    "veg restaurant in Perungudi Chennai",
     "best South Indian restaurant in Chennai",
     "authentic South Indian food Chennai",
     "South Indian restaurant in Perungudi",

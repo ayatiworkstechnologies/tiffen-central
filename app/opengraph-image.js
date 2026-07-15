@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Tiffen Central - Authentic South Indian food in Perungudi, Chennai";
+export const alt = "Tiffen Central - Best veg restaurant in Perungudi, Chennai";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

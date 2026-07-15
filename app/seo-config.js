@@ -4,8 +4,8 @@ export const siteUrl = configuredUrl.replace(/\/$/, "");
 
 export const seo = {
   name: "Tiffen Central",
-  title: "South Indian Restaurant in Chennai | Tiffen Central",
+  title: "Best veg restaurant in perungudi, chennai | Tiffen central",
   description:
-    "Visit Tiffen Central in Perungudi, Chennai, Tamil Nadu for fresh dosa, idli, vada, pongal, filter coffee, South Indian breakfast, dining and catering.",
+    "Looking for the best veg restaurant in Perungudi, Chennai? Tiffen Central serves fresh South Indian tiffin, dosas, idlis, pongal, vadas, and beverages every day",
   locale: "en_IN",
 };
