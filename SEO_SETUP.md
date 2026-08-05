@@ -1,7 +1,13 @@
 # Google indexing setup
 
 The site now publishes crawlable metadata, local restaurant structured data,
-`/robots.txt`, `/sitemap.xml`, and a social sharing image automatically.
+`/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/llms-full.txt`, and a social sharing image automatically.
+
+## AI & LLM Discovery (`/llms.txt` & `/llms-full.txt`)
+
+- `/llms.txt`: Structured Markdown summary adhering to standard llms.txt specification for AI crawlers (Perplexity, ChatGPT, Claude, Gemini, etc.).
+- `/llms-full.txt`: Complete, un-truncated text representation of all menu items, hours, address, catering details, and metadata for LLM ingestion.
+- Both endpoints are served dynamically via Next.js Route Handlers (`app/llms.txt/route.js`, `app/llms-full.txt/route.js`) and backed by static fallbacks in `/public`.
 
 ## One-time production setup
 

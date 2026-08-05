@@ -51,6 +51,9 @@ export const metadata = {
     languages: {
       "en-IN": "/",
     },
+    types: {
+      "text/plain": [{ url: "/llms.txt", title: "llms.txt" }],
+    },
   },
   openGraph: {
     type: "website",
