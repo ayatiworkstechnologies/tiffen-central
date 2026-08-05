@@ -230,41 +230,11 @@ export default function SouthIndianDelights() {
                   unoptimized
                   width={800}
                   height={800}
-                  src="/assets/Ghee Mini Sambar Idly.webp"
-                  alt="Traditional Pongal"
-                  className="h-[160px] w-full object-cover transition-transform duration-500 hover:scale-105"
+                  src="/assets/pongal.webp"
+                  alt="Traditional Pongal Bowl"
+                  className="h-[300px] w-full object-cover transition-transform duration-500 hover:scale-105"
                 />
               </motion.div>
-
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <motion.div
-                  variants={zoomIn}
-                  className="overflow-hidden rounded-xl"
-                >
-                  <Image
-                    unoptimized
-                    width={800}
-                    height={800}
-                    src="/assets/poori.webp"
-                    alt="Pongal Bowl"
-                    className="h-[120px] w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </motion.div>
-
-                <motion.div
-                  variants={zoomIn}
-                  className="overflow-hidden rounded-xl"
-                >
-                  <Image
-                    unoptimized
-                    width={800}
-                    height={800}
-                    src="/assets/chapthi.webp"
-                    alt="Pongal Dish"
-                    className="h-[120px] w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </motion.div>
-              </div>
               <div className="pt-4">
                 <h3 className="font-serif text-[21px] uppercase leading-[1.05] text-primary">
                   Traditional Pongal Bowl
