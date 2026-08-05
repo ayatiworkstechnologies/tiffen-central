@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/content/data";
 import styles from "./MenuModal.module.css";
@@ -36,7 +36,12 @@ function Leaf() {
 
 function MenuPanel({ category, compact = false }) {
   return (
-    <section
+    <motion.section
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.25 }}
       className={`${styles.panel} ${compact ? styles.compactPanel : ""}`}
       style={{ "--category": category.themeColor }}
     >
@@ -66,11 +71,13 @@ function MenuPanel({ category, compact = false }) {
           />
         </div>
       )}
-    </section>
+    </motion.section>
   );
 }
 
 export default function MenuModal({ open, onClose }) {
+  const [activeFilter, setActiveFilter] = useState("all");
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();
@@ -88,8 +95,28 @@ export default function MenuModal({ open, onClose }) {
   }, [open, onClose]);
 
   const categories = DATA.menu.categories;
-  const mainCategories = categories.slice(0, 6);
-  const bottomCategories = categories.slice(6);
+
+  const filters = [
+    { id: "all", label: "All Items" },
+    { id: "dosa", label: "Dosas" },
+    { id: "combos", label: "Combos" },
+    { id: "idly", label: "Idly" },
+    { id: "vada", label: "Vada" },
+    { id: "sweet", label: "Sweets & Tea" },
+  ];
+
+  const filteredCategories = categories.filter((cat) => {
+    if (activeFilter === "all") return true;
+    if (activeFilter === "dosa") return cat.iconCode === "dosa" || cat.iconCode === "butter";
+    if (activeFilter === "combos") return cat.iconCode === "combos" || cat.iconCode === "breakfast";
+    if (activeFilter === "idly") return cat.iconCode === "idly";
+    if (activeFilter === "vada") return cat.iconCode === "vada";
+    if (activeFilter === "sweet") return cat.iconCode === "sweet" || cat.iconCode === "beverages";
+    return true;
+  });
+
+  const mainCategories = filteredCategories.slice(0, 6);
+  const bottomCategories = filteredCategories.slice(6);
 
   return (
     <AnimatePresence>
@@ -120,10 +147,10 @@ export default function MenuModal({ open, onClose }) {
 
             <header className={styles.header}>
               <div className={`${styles.heroDish} ${styles.heroDishLeft}`}>
-                <Image src="/menu/menu-1.png" alt="Crisp dosa with chutneys" fill sizes="240px" className={styles.heroPhoto} priority />
+                <Image src="/assets/dosa.webp" alt="Crisp dosa with chutneys" fill sizes="240px" className={styles.heroPhoto} priority />
               </div>
               <div className={`${styles.heroDish} ${styles.heroDishRight}`}>
-                <Image src="/menu/menu-5.png" alt="Traditional South Indian breakfast" fill sizes="240px" className={styles.heroPhoto} priority />
+                <Image src="/assets/Idly Set.webp" alt="Traditional South Indian breakfast" fill sizes="240px" className={styles.heroPhoto} priority />
               </div>
 
               <div className={styles.cloche} aria-hidden="true">
@@ -149,13 +176,34 @@ export default function MenuModal({ open, onClose }) {
               </div>
             </header>
 
+            {/* Quick Filter Navigation Pills */}
+            <nav className={styles.filterBar} aria-label="Menu category filters">
+              {filters.map((f) => (
+                <button
+                  key={f.id}
+                  className={`${styles.filterPill} ${activeFilter === f.id ? styles.filterPillActive : ""}`}
+                  onClick={() => setActiveFilter(f.id)}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </nav>
+
             <main className={styles.menuGrid}>
-              {mainCategories.map((category) => <MenuPanel key={category.title} category={category} />)}
+              <AnimatePresence mode="popLayout">
+                {mainCategories.map((category) => (
+                  <MenuPanel key={category.title} category={category} />
+                ))}
+              </AnimatePresence>
             </main>
 
             {bottomCategories.length > 0 && (
               <div className={styles.bottomGrid}>
-                {bottomCategories.map((category) => <MenuPanel key={category.title} category={category} compact />)}
+                <AnimatePresence mode="popLayout">
+                  {bottomCategories.map((category) => (
+                    <MenuPanel key={category.title} category={category} compact />
+                  ))}
+                </AnimatePresence>
               </div>
             )}
 
