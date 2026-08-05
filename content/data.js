@@ -12,9 +12,9 @@ export const DATA = {
       mapIframe: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36757.199422413825!2d80.22238872824276!3d12.985986647910096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525ddbd385b09b%3A0xf3b13b5446f48a4!2sTiffen%20central!5e0!3m2!1sen!2sin!4v1783945293596!5m2!1sen!2sin",
     },
     socials: {
-      instagram: "https://www.instagram.com/tiffen.central/",
-      // facebook: "",
-      // x: "",
+      instagram: "https://www.instagram.com/tiffen.central/?hl=en",
+      facebook: "https://www.facebook.com/profile.php?id=61592420632551",
+      youtube: "https://www.youtube.com/@TiffenCentral",
     },
     hours: [
       { label: "Mon - Thu", value: "8:00 AM - 10:00 PM" },

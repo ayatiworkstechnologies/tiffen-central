@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiInstagram, FiFacebook } from "react-icons/fi";
-import { RiTwitterXLine } from "react-icons/ri";
+import { FiInstagram, FiFacebook, FiYoutube } from "react-icons/fi";
 import { DATA } from "@/content/data";
 import MenuModal from "./homepage/MenuModal";
 
@@ -37,8 +36,8 @@ export default function Footer() {
   }, []);
   const socials = [
     { label: "Instagram", href: site.socials.instagram, Icon: FiInstagram },
-    // { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
-    // { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
+    { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
+    { label: "YouTube", href: site.socials.youtube, Icon: FiYoutube },
   ];
 
   return (

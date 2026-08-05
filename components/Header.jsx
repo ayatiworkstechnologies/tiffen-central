@@ -4,8 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FiFacebook, FiInstagram } from "react-icons/fi";
-import { RiTwitterXLine } from "react-icons/ri";
+import { FiFacebook, FiInstagram, FiYoutube } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/content/data";
 
@@ -93,7 +92,7 @@ export default function Header() {
   const socialLinks = [
     { label: "Instagram", href: site.socials.instagram, Icon: FiInstagram },
     { label: "Facebook", href: site.socials.facebook, Icon: FiFacebook },
-    { label: "X", href: site.socials.x, Icon: RiTwitterXLine },
+    { label: "YouTube", href: site.socials.youtube, Icon: FiYoutube },
   ];
 
   /* Animation variants */
